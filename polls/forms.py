@@ -13,7 +13,7 @@ class FormRegistroUsuario(forms.Form):
     apellido_materno = forms.CharField(min_length=3)
     direccion = forms.CharField(min_length=3)
     telefono = forms.CharField(min_length=7)
-    sexo = forms.ChoiceField(widget=forms.Select, choices=(('0', 'Seleccionar Sexo'), ('1', 'Hombre',), ('2', 'Mujer',)))
+    sexo = forms.ChoiceField(widget=forms.Select, choices=(('0', 'Seleccionar Sexo'), ('1', 'Hombre',), ('2', 'Mujer',), ('3', 'Indefinido')))
     fecha_de_nacimiento = forms.DateField(widget=SelectDateWidget(), required = False)
     correo = forms.EmailField(widget=forms.EmailInput)
     
