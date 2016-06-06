@@ -10,8 +10,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+
 
 {# Display a form #}
 <div class="row"  >
@@ -19,7 +18,7 @@
             <div class="page-header">
                 <h2>Registro Usuario</h2>
             </div>
-
+            {% include '_messages.html' %}
             <form method="post" action="" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form form %}

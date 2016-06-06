@@ -41,14 +41,14 @@ def registro_usuario(request):
         # Comprobamos si el formulario es valido
         if form.is_valid():
             cleaned_data = form.cleaned_data
-            rut = cleaned_data.get('rut')
+            rut = cleaned_data.get('rut').replace('.','').replace('-','')
             nombre = cleaned_data.get('nombre')
-            apellidoPaterno = cleaned_data.get('apellido_Paterno')
-            apellidoMaterno = cleaned_data.get('apellido_Materno')
+            apellidoPaterno = cleaned_data.get('apellido_paterno')
+            apellidoMaterno = cleaned_data.get('apellido_materno')
             direccion = cleaned_data.get('direccion')
             telefono = cleaned_data.get('telefono')
             sexo = cleaned_data.get('sexo')
-            fechaNacimiento = cleaned_data.get('fecha_de_Nacimiento')
+            fechaNacimiento = cleaned_data.get('fecha_de_nacimiento')
             correo = cleaned_data.get('correo')
             user_model = User.objects.create_user(username=rut, password=rut)
             user_model.email = correo            
@@ -62,8 +62,11 @@ def registro_usuario(request):
             persona.persona_telefonocontacto = telefono
             persona.persona_correo = correo.lower()
             persona.persona_fechanacimiento = fechaNacimiento
+            persona.user = user_model
             user_model.save()
             persona.save()
+            messages.success(request, 'Usuario ' + nombre.lower() + ' ' + apellidoPaterno.lower() + ' ' + apellidoMaterno.lower() + ' creado con exito.')
+            form = FormRegistroUsuario()
     else:
         form = FormRegistroUsuario()
     context = {
