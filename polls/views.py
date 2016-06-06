@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 from django.shortcuts import render, redirect
-# -*- encoding: utf-8 -*- #
 from django.core.urlresolvers import reverse
-# Create your views here.
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from polls.models import *
@@ -71,3 +70,8 @@ def registro_usuario(request):
         'form': form
     }
     return render(request, 'registro.html', context)
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'Te has desconectado con exito.')
+    return redirect(reverse('login'))
