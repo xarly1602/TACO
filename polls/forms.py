@@ -14,7 +14,7 @@ class FormRegistroUsuario(forms.Form):
     direccion = forms.CharField(min_length=3)
     telefono = forms.CharField(min_length=7)
     sexo = forms.ChoiceField(widget=forms.Select, choices=(('0', 'Seleccionar Sexo'), ('1', 'Hombre',), ('2', 'Mujer',)))
-    fecha_de_nacimiento = forms.DateField(widget=SelectDateWidget(), required = False)
+    fecha_de_nacimiento = forms.DateField(widget=SelectDateWidget(years=range(1980, date.today().year+1)), required = False)
     correo = forms.EmailField(widget=forms.EmailInput)
     
     def clean_rut(self):        

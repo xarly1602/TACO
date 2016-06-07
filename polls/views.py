@@ -34,7 +34,7 @@ def login_view(request):
                 pass
         mensaje = 'Nombre de usuario o contraseña no valido'
     return render(request, 'login.html', {'mensaje': mensaje})
-
+@login_required(login_url='login')
 def registro_usuario(request):
     if request.method == 'POST':
         form = FormRegistroUsuario(request.POST, request.FILES)
