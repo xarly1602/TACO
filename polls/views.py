@@ -7,13 +7,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from polls.models import *
+from polls.tables import PersonaTable
 
 def index (request):
 	return HttpResponse("Hola, no se que es esto!.")
 
 @login_required(login_url='login')
 def index_view(request):
-    return render(request, 'index.html')
+    listarPersonas = PersonaTable()
+    return render(request, "index.html", {'listarPersonas': listarPersonas})
+    #return render(request, 'index.html')
 
 def login_view(request):
     # Si el usuario esta ya logueado, lo redireccionamos a index_view
@@ -78,3 +81,7 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'Te has desconectado con exito.')
     return redirect(reverse('login'))
+
+def listarPersonas(request):
+    listarPersonas = PersonaTable()
+    return render(request, "index.html", {'listarPersonas': listarPersonas})
