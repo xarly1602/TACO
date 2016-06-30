@@ -42,6 +42,8 @@ class Control(models.Model):
     control_dosis = models.FloatField(blank=True, null=True)
     control_fechasiguiente = models.DateField(blank=True, null=True)
     control_lugar = models.CharField(max_length=512, blank=True, null=True)
+    #control_valorp = models.FloatField(blank=True, null=True)
+    #control_error = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = True
@@ -69,10 +71,12 @@ class Paciente(models.Model):
         managed = True
         db_table = 'paciente'
         unique_together = (('persona', 'paciente_id'), ('persona', 'paciente_id'),)
+    def __str__(self):
+        return self.persona.persona_rut
 
 
 class Persona(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, null = True)
     persona_id = models.AutoField(primary_key=True)
     comuna = models.ForeignKey(Comuna, models.DO_NOTHING, blank=True, null=True)
     persona_nombre = models.CharField(max_length=256, blank=True, null=True)
@@ -100,6 +104,8 @@ class Plansalud(models.Model):
     class Meta:
         managed = True
         db_table = 'plansalud'
+    def __str__(self):
+        return self.plan_nombre
 
 
 class Profesional(models.Model):

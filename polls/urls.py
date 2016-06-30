@@ -7,4 +7,6 @@ urlpatterns = [
     url(r'^login$', views.login_view, name='login'),
     url(r'^logout$', views.logout_view, name='logout'),
     url(r'^registro$', views.registro_usuario, name='registro'),
+    url(r'^verpaciente/(?P<paciente_id>[\w]+)/$', views.verpaciente_view, name='verpaciente'),
+    url(r'^ingreso$', views.ingreso_paciente, name='ingreso'),
 ]

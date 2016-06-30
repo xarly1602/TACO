@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -37,6 +37,10 @@ def login_view(request):
                 pass
         mensaje = 'Nombre de usuario o contraseña no valido'
     return render(request, 'login.html', {'mensaje': mensaje})
+
+def verpaciente_view(request, paciente_id):
+    return render(request, 'verpaciente.html', {'paciente': Paciente.objects.filter(paciente_id = paciente_id)})
+
 @login_required(login_url='login')
 def registro_usuario(request):
     if request.method == 'POST':
@@ -76,6 +80,53 @@ def registro_usuario(request):
         'form': form
     }
     return render(request, 'registro.html', context)
+
+@login_required(login_url='login')
+def ingreso_paciente(request):
+    if request.method == 'POST':
+        form = FormRegistroPaciente(request.POST, request.FILES)
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            rut = cleaned_data.get('rut').replace('.','').replace('-','')
+            ficha = cleaned_data.get('numero_de_ficha')
+            nombre = cleaned_data.get('nombre')
+            apellidoPaterno = cleaned_data.get('apellido_paterno')
+            apellidoMaterno = cleaned_data.get('apellido_materno')
+            direccion = cleaned_data.get('direccion')
+            telefono = cleaned_data.get('telefono_de_contacto')
+            sexo = cleaned_data.get('sexo')
+            fechaNacimiento = cleaned_data.get('fecha_de_nacimiento')
+            #correo = cleaned_data.get('correo')
+            plan = cleaned_data.get('plan_de_salud')
+            anamnesis = cleaned_data.get('anamnesis')
+            persona = Persona()
+            paciente = Paciente()
+            persona.persona_nombre = nombre.lower()
+            persona.persona_apellidopaterno = apellidoPaterno.lower()
+            persona.persona_apellidomaterno = apellidoMaterno.lower()
+            persona.persona_rut = rut.replace(".","").replace("-","")
+            persona.persona_sexo = sexo
+            persona.persona_direccion = direccion.lower()
+            persona.persona_telefonocontacto = telefono
+            #persona.persona_correo = correo.lower()
+            persona.persona_fechanacimiento = fechaNacimiento
+            persona.save()
+            paciente.persona = persona
+            paciente.paciente_anamnesis = anamnesis
+            paciente.paciente_nficha = ficha
+            paciente.paciente_telefonoemergencia = telefono
+            paciente.plan = plan
+            paciente.save()
+            messages.success(request, 'Paciente ' + nombre.lower() + ' ' + apellidoPaterno.lower() + ' ' + apellidoMaterno.lower() + ' ingresado con exito.')
+            form = FormRegistroUsuario()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = FormRegistroPaciente()
+    context = {
+        'form': form
+    }
+    return render(request, 'ingreso.html', context)
 
 def logout_view(request):
     logout(request)
