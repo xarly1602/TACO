@@ -8,6 +8,6 @@
         <h2>Paciente: {{ paciente.persona.persona_nombre }} {{ paciente.persona.persona_apellidopaterno }} {{ paciente.persona.persona_apellidomaterno }}</h2>
 
         {% render_table listaControles %}
-        <a href="{% url 'control' %}" class="btn btn-primary" type="submit">Nuevo Control</a>
+        <a href="control" class="btn btn-primary" type="submit">Nuevo Control</a>
     </div>
 {% endblock body %}

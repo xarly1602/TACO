@@ -57,6 +57,8 @@ class Medicamento(models.Model):
     class Meta:
         managed = True
         db_table = 'medicamento'
+    def __str__(self):
+        return self.medicamento_nombre
 
 
 class Paciente(models.Model):

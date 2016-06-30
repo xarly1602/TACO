@@ -40,7 +40,7 @@ def login_view(request):
 
 def verpaciente_view(request, paciente_id):
     paciente = Paciente.objects.get(paciente_id = paciente_id)
-    listaControles = ControlTable()
+    listaControles = ControlTable(Control.objects.filter(paciente=paciente))
     return render(request, 'verpaciente.html', {'paciente': paciente, 'listaControles': listaControles})
 
 @login_required(login_url='login')
@@ -130,7 +130,7 @@ def ingreso_paciente(request):
     }
     return render(request, 'ingreso.html', context)
 
-def control_view(request):
+def control_view(request, paciente_id):
     if request.method == 'POST':
         form = FormNuevoControl(request.POST, request.FILES)
         # Comprobamos si el formulario es valido
@@ -143,12 +143,19 @@ def control_view(request):
             fechasiguiente = cleaned_data.get('siguiente_control')
             lugar = cleaned_data.get('lugar')
             control = Control()
-            
+            control.paciente = Paciente.objects.get(paciente_id=paciente_id)
+            control.medicamento = medicamento
+            control.control_fecha = fecha
+            control.control_inr = inr
+            control.control_dosis = dosis
+            control.control_fechasiguiente = fechasiguiente
+            control.control_lugar = lugar
+            control.save()
             messages.success(request, 'Control guardado con éxito')
             form = FormNuevoControl()
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('verpaciente', kwargs={'paciente_id': paciente_id}))
     else:
-        form = FormNuevoControl()
+        form = FormNuevoControl(initial={'fecha': date.today()})
     context = {
         'form': form
     }
