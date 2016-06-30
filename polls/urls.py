@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^registro$', views.registro_usuario, name='registro'),
     url(r'^verpaciente/(?P<paciente_id>[\w]+)/$', views.verpaciente_view, name='verpaciente'),
     url(r'^ingreso$', views.ingreso_paciente, name='ingreso'),
+    url(r'^control$', views.control_view, name='control'),
 ]

@@ -139,3 +139,13 @@ class FormRegistroPaciente(forms.Form):
         if fecha != None and fecha > date.today():
             raise forms.ValidationError('Ingrese una fecha válida')
         return fecha
+
+class FormNuevoControl(forms.Form):
+    #paciente = models.ForeignKey('Paciente', models.DO_NOTHING, blank=True, null=True)
+    #persona = models.ForeignKey('Profesional', models.DO_NOTHING, blank=True, null=True)
+    medicamento = forms.ModelChoiceField(queryset=Medicamento.objects.all(), empty_label="Seleccione Medicamento", to_field_name="medicamento_nombre")
+    fecha = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
+    inr = forms.FloatField()
+    dosis = forms.FloatField()
+    siguiente_control = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
+    lugar = forms.CharField(min_length=3)

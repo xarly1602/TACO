@@ -121,7 +121,7 @@ def ingreso_paciente(request):
             paciente.plan = plan
             paciente.save()
             messages.success(request, 'Paciente ' + nombre.lower() + ' ' + apellidoPaterno.lower() + ' ' + apellidoMaterno.lower() + ' ingresado con exito.')
-            form = FormRegistroUsuario()
+            form = FormRegistroPaciente()
             return HttpResponseRedirect(reverse('index'))
     else:
         form = FormRegistroPaciente()
@@ -129,6 +129,30 @@ def ingreso_paciente(request):
         'form': form
     }
     return render(request, 'ingreso.html', context)
+
+def control_view(request):
+    if request.method == 'POST':
+        form = FormNuevoControl(request.POST, request.FILES)
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            medicamento = cleaned_data.get('medicamento')
+            fecha = cleaned_data.get('fecha')
+            inr = cleaned_data.get('inr')
+            dosis = cleaned_data.get('dosis')
+            fechasiguiente = cleaned_data.get('siguiente_control')
+            lugar = cleaned_data.get('lugar')
+            control = Control()
+            
+            messages.success(request, 'Control guardado con éxito')
+            form = FormNuevoControl()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = FormNuevoControl()
+    context = {
+        'form': form
+    }
+    return render(request, 'control.html', context)
 
 def logout_view(request):
     logout(request)
