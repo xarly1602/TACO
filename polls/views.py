@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from polls.models import *
-from polls.tables import PersonaTable
+from polls.tables import *
 
 def index (request):
 	return HttpResponse("Hola, no se que es esto!.")
@@ -39,7 +39,9 @@ def login_view(request):
     return render(request, 'login.html', {'mensaje': mensaje})
 
 def verpaciente_view(request, paciente_id):
-    return render(request, 'verpaciente.html', {'paciente': Paciente.objects.filter(paciente_id = paciente_id)})
+    paciente = Paciente.objects.get(paciente_id = paciente_id)
+    listaControles = ControlTable()
+    return render(request, 'verpaciente.html', {'paciente': paciente, 'listaControles': listaControles})
 
 @login_required(login_url='login')
 def registro_usuario(request):

@@ -1,5 +1,4 @@
-from polls.models import Persona
-from polls.models import Paciente
+from polls.models import Persona, Paciente, Control
 from datetime import date
 from table import Table
 from table.utils import A
@@ -34,4 +33,14 @@ class PersonaTable(Table):
 		model = Paciente
 		#unique_together = (('persona', 'paciente_id'), ('persona', 'paciente_id'),)
         
-		
+class ControlTable(Table):
+	#paciente = Column()
+    #persona = Column()
+    control_fecha = Column(field='control_fecha', header=u'Fecha Control')
+    medicamento = Column(field='medicamento.medicamento_nombre', header=u'Medicamento')
+    control_inr = Column(field='control_inr', header=u'INR')
+    control_dosis = Column(field='control_dosis', header=u'Dosis')
+    #control_fechasiguiente = Column() 
+    control_lugar = Column(field='control_lugar', header=u'Lugar')
+    class Meta:
+    	model = Control

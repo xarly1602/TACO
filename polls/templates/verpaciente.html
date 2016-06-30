@@ -1,7 +1,13 @@
 {% extends "template.html" %}
+{% load table_tags %}
 
 {% block title %}T.A.C.O. Smart | Test{% endblock %}
 {%block heading%} {% endblock%}
 {% block body %}
-    <h2>Vista paciente {{ paciente.persona }}</h2>
+    <div class="container" style="margin-top: 10px">
+        <h2>Paciente: {{ paciente.persona.persona_nombre }} {{ paciente.persona.persona_apellidopaterno }} {{ paciente.persona.persona_apellidomaterno }}</h2>
+
+        {% render_table listaControles %}
+        <a href="#" class="btn btn-primary" type="submit">Nuevo Control</a>
+    </div>
 {% endblock body %}
