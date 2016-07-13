@@ -26,7 +26,7 @@ class PersonaTable(Table):
 	paciente_nficha = Column(field='paciente_nficha', header=u'Numero de ficha')
 	#paciente_telefonoemergencia = Column(field='paciente_telefonoemergencia', header=u'Numero de contacto')
 	#paciente_anamnesis = Column(header=u'Anamnesis')
-	name = LinkColumn(header=u'NAME', links=[
+	name = LinkColumn(header=u'Ver paciente', links=[
         Link(viewname='verpaciente', args=(A('paciente_id'),), text='ver')])
         #Link(viewname='temp', args=(A('paciente_id'),), text=A('paciente_nombre'))])
 	class Meta:
