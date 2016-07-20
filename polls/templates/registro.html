@@ -14,12 +14,12 @@
 
 {# Display a form #}
 <div class="row"  >
-        <div class="col-md-3 col-sm-offset-4">
+        <div  class="col-md-3 col-sm-offset-4">
             <div class="page-header">
                 <h2>Registro Usuario</h2>
             </div>
             {% include '_messages.html' %}
-            <form method="post" action="" enctype="multipart/form-data">
+            <form  class="mibloque" method="post" action="" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <button type="submit" class="btn btn-primary">Registrar</button>
