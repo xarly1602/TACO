@@ -119,6 +119,7 @@ def ingreso_paciente(request):
             paciente.paciente_nficha = ficha
             paciente.paciente_telefonoemergencia = telefono
             paciente.plan = plan
+            paciente.paciente_rango = "2 - 3" # Rango terapeutico por defecto
             paciente.save()
             messages.success(request, 'Paciente ' + nombre.lower() + ' ' + apellidoPaterno.lower() + ' ' + apellidoMaterno.lower() + ' ingresado con exito.')
             form = FormRegistroPaciente()
