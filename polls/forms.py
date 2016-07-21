@@ -141,12 +141,38 @@ class FormRegistroPaciente(forms.Form):
             raise forms.ValidationError('Ingrese una fecha válida')
         return fecha
 
+
 class FormNuevoControl(forms.Form):
+   
     #paciente = models.ForeignKey('Paciente', models.DO_NOTHING, blank=True, null=True)
     #persona = models.ForeignKey('Profesional', models.DO_NOTHING, blank=True, null=True)
     medicamento = forms.ModelChoiceField(queryset=Medicamento.objects.all(), empty_label="Seleccione Medicamento", to_field_name="medicamento_nombre")
-    fecha = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
-    inr = forms.FloatField(min_value=0, max_value=10, widget=NumberInput(attrs={'type': 'number', 'step': "0.1"}))
+    fecha = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = True)
+    inr = forms.FloatField(min_value=0, max_value=10,widget=NumberInput(attrs={'type': 'number', 'step': "0.1"}))
     dosis = forms.FloatField(min_value=0)
     siguiente_control = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
     lugar = forms.CharField(min_length=3)
+
+    def clean_fecha(self):
+        fechaC = self.cleaned_data['fecha']        
+        if fechaC != None and fechaC > date.today():
+            raise forms.ValidationError('Ingrese una fecha válida')
+        return fechaC
+
+    def clean_inr(self):
+        inrC = self.cleaned_data['inr']        
+        if inrC != None and inrC < 0:
+            raise forms.ValidationError('El valor del INR no es válido')
+        return inrC
+
+    def clean_dosis(self):
+        dosisC = self.cleaned_data['dosis']        
+        if dosisC != None and dosisC < 0:
+            raise forms.ValidationError('El valor de la dosis no es válido')
+        return dosisC
+
+    def clean_siguiente_control(self):
+        siguienteC = self.cleaned_data['siguiente_control']        
+        if siguienteC == None or siguienteC <= date.today():
+            raise forms.ValidationError('Ingrese una fecha válida')
+        return siguienteC
