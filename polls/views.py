@@ -171,8 +171,8 @@ def ajax_view(request):
         inr = request.GET['inr']        
         predictor = Predictor()
         controles = Control.objects.filter(paciente=paciente_id)                
-        if len(controles) != 0:
-            inr = float(inr)        
+        if len(inr) != 0 and len(controles) != 0:
+            inr = float(inr)                   
             dosis_anterior = controles[len(controles)-1].control_dosis
             curva = predictor.calcula_mejor_curva(dosis_anterior, inr)
             dosis = predictor.calcula_dosis(2.5, curva)
