@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^verpaciente/(?P<paciente_id>[\w]+)/$', views.verpaciente_view, name='verpaciente'),
     url(r'^ingreso$', views.ingreso_paciente, name='ingreso'),
     url(r'^verpaciente/(?P<paciente_id>[\w]+)/control$', views.control_view, name='control'),
+    url(r'^ajax$', views.ajax_view, name='ajax'),
 ]

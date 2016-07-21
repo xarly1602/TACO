@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from polls.models import *
 from polls.tables import *
+from polls.predictor import *
 
 def index (request):
 	return HttpResponse("Hola, no se que es esto!.")
@@ -132,6 +133,7 @@ def ingreso_paciente(request):
     return render(request, 'ingreso.html', context)
 
 def control_view(request, paciente_id):
+    paciente = Paciente.objects.get(paciente_id = paciente_id)
     if request.method == 'POST':
         form = FormNuevoControl(request.POST, request.FILES)
         # Comprobamos si el formulario es valido
@@ -156,11 +158,25 @@ def control_view(request, paciente_id):
             form = FormNuevoControl()
             return HttpResponseRedirect(reverse('verpaciente', kwargs={'paciente_id': paciente_id}))
     else:
-        form = FormNuevoControl(initial={'fecha': date.today()})
+        form = FormNuevoControl(initial={'fecha': date.today(), 'inr': 0})
     context = {
-        'form': form
+        'form': form,
+        'paciente': paciente
     }
     return render(request, 'control.html', context)
+
+def ajax_view(request):
+    if request.method == 'GET':
+        paciente_id = request.GET['id_paciente']
+        inr = request.GET['inr']
+        inr = float(inr)
+        predictor = Predictor()
+        controles = Control.objects.filter(paciente=paciente_id)
+        dosis_anterior = controles[len(controles)-1].control_dosis
+        curva = predictor.calcula_mejor_curva(dosis_anterior, inr)
+        dosis = predictor.calcula_dosis(2.5, curva)
+        return HttpResponse(dosis)
+
 
 def logout_view(request):
     logout(request)
