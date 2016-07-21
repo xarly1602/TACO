@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from polls.models import *
 from polls.validators import *
 from django.forms.extras.widgets import SelectDateWidget
-from django.forms.widgets import TextInput
+from django.forms.widgets import NumberInput
 from datetime import date
 
 class FormRegistroUsuario(forms.Form):
@@ -146,7 +146,7 @@ class FormNuevoControl(forms.Form):
     #persona = models.ForeignKey('Profesional', models.DO_NOTHING, blank=True, null=True)
     medicamento = forms.ModelChoiceField(queryset=Medicamento.objects.all(), empty_label="Seleccione Medicamento", to_field_name="medicamento_nombre")
     fecha = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
-    inr = forms.FloatField(widget=TextInput(attrs={'type': 'number', 'step': "0.1"}))
-    dosis = forms.FloatField()
+    inr = forms.FloatField(min_value=0, max_value=10, widget=NumberInput(attrs={'type': 'number', 'step': "0.1"}))
+    dosis = forms.FloatField(min_value=0)
     siguiente_control = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
     lugar = forms.CharField(min_length=3)

@@ -168,14 +168,18 @@ def control_view(request, paciente_id):
 def ajax_view(request):
     if request.method == 'GET':
         paciente_id = request.GET['id_paciente']
-        inr = request.GET['inr']
-        inr = float(inr)
+        inr = request.GET['inr']        
         predictor = Predictor()
-        controles = Control.objects.filter(paciente=paciente_id)
-        dosis_anterior = controles[len(controles)-1].control_dosis
-        curva = predictor.calcula_mejor_curva(dosis_anterior, inr)
-        dosis = predictor.calcula_dosis(2.5, curva)
-        return HttpResponse(dosis)
+        controles = Control.objects.filter(paciente=paciente_id)        
+        if len(controles) != 0:
+            inr = float(inr)        
+            dosis_anterior = controles[len(controles)-1].control_dosis
+            curva = predictor.calcula_mejor_curva(dosis_anterior, inr)
+            dosis = predictor.calcula_dosis(2.5, curva)
+            return HttpResponse(dosis)
+        else:
+            dosis = 0
+            return HttpResponse(dosis)
 
 
 def logout_view(request):
