@@ -23,7 +23,7 @@
             <button type="submit" class="btn btn-primary">Ingresar</button>
             <a href="{% url 'index' %}" class="btn btn-primary" type="submit">Volver</a>
             <script>
-            $( "#id_inr" ).blur(function() {
+            $( "#id_inr" ).change(function() {
                 $.ajax({
                     data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
                     url: "{% url 'ajax' %}",
