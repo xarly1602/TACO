@@ -1,12 +1,17 @@
 {% extends "template.html" %}
 {% load table_tags %}
 
-{% block title %}T.A.C.O. Smart | Test{% endblock %}
+{% block title %}T.A.C.O. Smart | Controles{% endblock %}
 {%block heading%} {% endblock%}
 {% block body %}
     <div class="container" style="margin-top: 10px">
         <h2>Paciente: {{ paciente.persona.persona_nombre }} {{ paciente.persona.persona_apellidopaterno }} {{ paciente.persona.persona_apellidomaterno }}</h2>
-
+        {% include '_messages.html' %}
+        {% if mensaje %}
+            <div class="alert alert-danger">
+            {{ mensaje }}<button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
         {% render_table listaControles %}
         <a href="control" class="btn btn-primary" type="submit">Nuevo Control</a>
     </div>

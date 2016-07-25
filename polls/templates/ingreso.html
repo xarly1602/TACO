@@ -7,31 +7,23 @@
 {% block body %}
 {# Load the tag library #}
 {% load bootstrap3 %}
-
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-
-
-{# Display a form #}
-
 <div class="row"  >
-        <div class="col-md-3 col-sm-offset-4">
-            <div class="page-header">
-                <h2>Ingreso Paciente</h2>
-            </div>
-            {% include '_messages.html' %}
-            <form method="post" action="" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <button type="submit" class="btn btn-primary">Ingresar</button>
-                <a href="{% url 'index' %}" class="btn btn-primary" type="submit">Volver</a>
-
-            </form>
+    <div class="col-md-3 col-sm-offset-4">
+        <div class="page-header">
+            <h2>Ingreso Paciente</h2>
         </div>
+        {% include '_messages.html' %}
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn btn-primary">Ingresar</button>
+            <a href="{% url 'index' %}" class="btn btn-primary" type="submit">Volver</a>
+        </form>
+    </div>
 </div>
-
-
 
 {% endblock %}

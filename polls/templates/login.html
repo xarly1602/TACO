@@ -9,11 +9,6 @@
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-
-
-
-{# Display a form #}
-
  
 <div class="row" >
     <div class="col-md-4 col-md-offset-4" padding: 50px>
@@ -25,8 +20,7 @@
                 </div>
             {% endif %}
  		<form method="post" action="" >
- 			{% csrf_token %} 
-           			
+ 			{% csrf_token %}            		
  			<div class="form-group">
  				<label class="control-label" for="username">Nombre de usuario</label>
         		<input type="text" id="username" name="username" class="form-control" value="{{ username }}">
@@ -39,7 +33,5 @@
 		</form>
 	</div>
 </div>
-
-
 
 {% endblock%}
