@@ -29,7 +29,19 @@
                     url: "{% url 'ajax_dosis' %}",
                     type: "get",
                     success: function(dosis){
-                        $('#id_dosis').val(dosis);
+                        if (dosis != 0) {
+                            $('#id_dosis').val(dosis);
+                            $('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
+                            $('#id_dosis').popover('show');                            
+                        }
+                        else{
+                            $('#id_dosis').val(dosis); 
+                            $('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
+                            $('#id_dosis').popover('show');
+                        }
+                        setTimeout(function () {
+                                $('#id_dosis').popover('hide');
+                            }, 2000);
                     }
                 });
             });
@@ -40,7 +52,6 @@
                     url: "{% url 'ajax_inr' %}",
                     type: "get",
                     success: function(inr){
-                        console.log(inr)
                         $('#id_inr_predicho').val(inr);
                     }
                 });

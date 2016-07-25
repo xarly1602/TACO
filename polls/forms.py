@@ -162,13 +162,13 @@ class FormNuevoControl(forms.Form):
 
     def clean_inr(self):
         inrC = self.cleaned_data['inr']        
-        if inrC != None and inrC < 0:
+        if inrC != None and inrC <= 0:
             raise forms.ValidationError('El valor del INR no es válido')
         return inrC
 
     def clean_dosis(self):
         dosisC = self.cleaned_data['dosis']        
-        if dosisC != None and dosisC < 0:
+        if dosisC != None and dosisC <= 0:
             raise forms.ValidationError('El valor de la dosis no es válido')
         return dosisC
 
