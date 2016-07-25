@@ -62,21 +62,35 @@ class Predictor():
         dosis = round(dosis*7,0)
         return dosis
 
-    def __init__(self):
-        lista_m = self.genera_sd(0.422, 0.1043)
-        lista_k = self.genera_sd(0.98, 0.17)
-        lista_cmax = self.genera_sd(5.49, 1.63)
-        lista_Cl = [2.19]*19
-        lista_V = [7.5]*19
-        lista_Tau = [24.]*19
-        dosis = [0, 0.25, 0.5, 1., 1.5, 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 6.5, 7., 7.5, 8., 8.5, 9., 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17]
-        self.param.append(lista_m)
-        self.param.append(lista_Cl)
-        self.param.append(lista_V)
-        self.param.append(lista_k)
-        self.param.append(lista_Tau)
-        self.param.append(lista_cmax)
-        self.param = [list(i) for i in zip(*self.param)]
+    def predecir_inr(self, dosis_h, inr, dosis):
+        regr = linear_model.LinearRegression()
+        dataX = np.array(dosis_h)
+        dataY = np.array(inr)
+        dataX = dataX.reshape(-1,1)
+        dataY = dataY.reshape(-1,1)
+        regr.fit(dataX, dataY)
+        coef = regr.coef_
+        inter = regr.intercept_
+        pred = coef*dosis + inter
+        pred = round(pred[0], 2)
+        return pred
+
+    def __init__(self, tipo):
+        if tipo == 0:
+            lista_m = self.genera_sd(0.422, 0.1043)
+            lista_k = self.genera_sd(0.98, 0.17)
+            lista_cmax = self.genera_sd(5.49, 1.63)
+            lista_Cl = [2.19]*19
+            lista_V = [7.5]*19
+            lista_Tau = [24.]*19
+            dosis = [0, 0.25, 0.5, 1., 1.5, 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 6.5, 7., 7.5, 8., 8.5, 9., 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17]
+            self.param.append(lista_m)
+            self.param.append(lista_Cl)
+            self.param.append(lista_V)
+            self.param.append(lista_k)
+            self.param.append(lista_Tau)
+            self.param.append(lista_cmax)
+            self.param = [list(i) for i in zip(*self.param)]
 
     #Valores predeterminados.
     #m = 0.422

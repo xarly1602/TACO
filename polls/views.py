@@ -165,11 +165,11 @@ def control_view(request, paciente_id):
     }
     return render(request, 'control.html', context)
 
-def ajax_view(request):
+def ajax_view_dosis(request):
     if request.method == 'GET':
         paciente_id = request.GET['id_paciente']
         inr = request.GET['inr']        
-        predictor = Predictor()
+        predictor = Predictor(0)
         controles = Control.objects.filter(paciente=paciente_id)                
         if len(inr) != 0 and len(controles) != 0:
             inr = float(inr)                   
@@ -178,9 +178,29 @@ def ajax_view(request):
             dosis = predictor.calcula_dosis(2.5, curva)
             return HttpResponse(dosis)
         else:
-            dosis = 0
+            dosis = 0 
             return HttpResponse(dosis)
 
+def ajax_view_inr(request):
+    if request.method == 'GET':
+        paciente_id = request.GET['id_paciente']
+        dosis = request.GET['dosis']
+        predictor = Predictor(1)
+        controles = Control.objects.filter(paciente=paciente_id)
+        if len(controles) >= 3:
+            dosis_h = list()
+            inr = list()
+            dosis_h.append(0)
+            dosis = float(dosis)
+            for control in controles:
+                dosis_h.append(control.control_dosis)
+                inr.append(control.control_inr)
+            x = dosis_h.pop()
+            inr_p = predictor.predecir_inr(dosis_h, inr, dosis)
+            return HttpResponse(inr_p)
+        else:
+            inr_p = "Faltan datos para la predicción"
+            return HttpResponse(inr_p)
 
 def logout_view(request):
     logout(request)

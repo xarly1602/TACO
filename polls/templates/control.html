@@ -19,17 +19,29 @@
         {% include '_messages.html' %}
         <form id="form" method="post" action="" enctype="multipart/form-data">
             {% csrf_token %}
-            {% bootstrap_form form %}
+            {% bootstrap_form form %}            
             <button type="submit" class="btn btn-primary">Ingresar</button>
             <a href="{% url 'index' %}" class="btn btn-primary" type="submit">Volver</a>
             <script>
             $( "#id_inr" ).change(function() {
                 $.ajax({
                     data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
-                    url: "{% url 'ajax' %}",
+                    url: "{% url 'ajax_dosis' %}",
                     type: "get",
                     success: function(dosis){
                         $('#id_dosis').val(dosis);
+                    }
+                });
+            });
+
+            $( "#id_dosis" ).change(function() {
+                $.ajax({
+                    data: {'dosis': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
+                    url: "{% url 'ajax_inr' %}",
+                    type: "get",
+                    success: function(inr){
+                        console.log(inr)
+                        $('#id_inr_predicho').val(inr);
                     }
                 });
             });

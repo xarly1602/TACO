@@ -150,6 +150,7 @@ class FormNuevoControl(forms.Form):
     fecha = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = True)
     inr = forms.FloatField(min_value=0, max_value=10,widget=NumberInput(attrs={'type': 'number', 'step': "0.1"}))
     dosis = forms.FloatField(min_value=0)
+    inr_predicho = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), required = False)
     siguiente_control = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
     lugar = forms.CharField(min_length=3)
 
