@@ -44,8 +44,9 @@ class Control(models.Model):
     control_fechasiguiente = models.DateField(blank=True, null=True)
     control_lugar = models.CharField(max_length=512, blank=True, null=True)
     control_inr_p = models.FloatField(blank=True, null=True)
-    control_error = models.FloatField(blank=True, null=True)
+    control_dosis_p = models.FloatField(blank=True, null=True)
     control_evolucion = models.TextField(blank=True, null=True)
+    control_estado = models.BooleanField(default=False)
 
     class Meta:
         managed = True
