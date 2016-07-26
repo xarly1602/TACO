@@ -10,6 +10,8 @@ class Cargo(models.Model):
     class Meta:
         managed = True
         db_table = 'cargo'
+    def __str__(self):
+        return self.cargo_nombre
 
 
 class Ciudad(models.Model):
@@ -20,6 +22,8 @@ class Ciudad(models.Model):
     class Meta:
         managed = True
         db_table = 'ciudad'
+    def __str__(self):
+        return self.ciudad_nombre
 
 
 class Comuna(models.Model):
@@ -30,6 +34,8 @@ class Comuna(models.Model):
     class Meta:
         managed = True
         db_table = 'comuna'
+    def __str__(self):
+        return self.comuna_nombre
 
 
 class Control(models.Model):
@@ -51,6 +57,8 @@ class Control(models.Model):
     class Meta:
         managed = True
         db_table = 'control'
+    def __str__(self):
+        return str(self.paciente.persona.persona_rut) + " - " + str(self.control_fecha)
 
 
 class Diagnostico(models.Model):
@@ -60,6 +68,8 @@ class Diagnostico(models.Model):
     class Meta:
         managed = True
         db_table = 'diagnostico'
+    def __str__(self):
+        return self.diagnostico_nombre
 
 
 class LugarDeTrabajo(models.Model):
@@ -69,6 +79,8 @@ class LugarDeTrabajo(models.Model):
     class Meta:
         managed = True
         db_table = 'lugar_de_trabajo'
+    def __str__(self):
+        return self.lugar_nombre
 
 
 class Medicamento(models.Model):
@@ -108,6 +120,8 @@ class PacienteDiagnostico(models.Model):
         managed = True
         db_table = 'paciente_diagnostico'
         unique_together = (('persona', 'diagnostico'), ('persona', 'diagnostico'),)
+    def __str__(self):
+        return str(self.persona.persona_rut) + " - " + str(self.diagnostico.diagnostico_nombre)
 
 
 class Persona(models.Model):
@@ -153,6 +167,8 @@ class Profesional(models.Model):
         managed = True
         db_table = 'profesional'
         unique_together = (('persona', 'profesional_id'), ('persona', 'profesional_id'),)
+    def __str__(self):
+        return self.persona.persona_rut
 
 
 class ProfesionalLugar(models.Model):
@@ -165,6 +181,8 @@ class ProfesionalLugar(models.Model):
         managed = True
         db_table = 'profesional_lugar'
         unique_together = (('lugar', 'persona'), ('lugar', 'persona'),)
+    def __str__(self):
+        return str(self.persona.persona_rut) + " - " + str(self.lugar.lugar_nombre)
 
 
 class Region(models.Model):
@@ -174,3 +192,5 @@ class Region(models.Model):
     class Meta:
         managed = True
         db_table = 'region'
+    def __str__(self):
+        return self.region_nombre

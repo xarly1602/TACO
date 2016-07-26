@@ -79,6 +79,7 @@ class FormRegistroPaciente(forms.Form):
     nombre = forms.CharField(min_length=3)
     apellido_paterno = forms.CharField(min_length=3)
     apellido_materno = forms.CharField(min_length=3)
+    diagnostico = forms.ModelChoiceField(queryset=Diagnostico.objects.all(), empty_label="Seleccione diagnostico", to_field_name="diagnostico_nombre")
     direccion = forms.CharField(min_length=3)
     telefono_de_contacto = forms.CharField(min_length=7)
     sexo = forms.ChoiceField(widget=forms.Select, choices=(('0', 'Seleccionar Sexo'), ('1', 'Hombre',), ('2', 'Mujer',)))
@@ -153,6 +154,7 @@ class FormNuevoControl(forms.Form):
     inr_predicho = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), required = False)
     siguiente_control = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
     lugar = forms.CharField(min_length=3)
+    evolucion = forms.CharField(widget=forms.Textarea)
 
     def clean_fecha(self):
         fechaC = self.cleaned_data['fecha']        

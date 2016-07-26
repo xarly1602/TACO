@@ -145,6 +145,7 @@ def control_view(request, paciente_id):
             dosis = cleaned_data.get('dosis')
             fechasiguiente = cleaned_data.get('siguiente_control')
             lugar = cleaned_data.get('lugar')
+            evolucion = cleaned_data.get('evolucion')
             control = Control()
             control.paciente = Paciente.objects.get(paciente_id=paciente_id)
             control.medicamento = medicamento
@@ -153,6 +154,7 @@ def control_view(request, paciente_id):
             control.control_dosis = dosis
             control.control_fechasiguiente = fechasiguiente
             control.control_lugar = lugar
+            control.control_evolucion = evolucion
             control.save()
             messages.success(request, 'Control guardado con éxito')
             form = FormNuevoControl()
@@ -201,6 +203,11 @@ def ajax_view_inr(request):
         else:
             inr_p = "Faltan datos para la predicción"
             return HttpResponse(inr_p)
+
+def ajax_view_modal(request):
+    if request.method == 'GET':
+        dosis = "wena zi"
+        return HttpResponse(dosis)
 
 def logout_view(request):
     logout(request)
