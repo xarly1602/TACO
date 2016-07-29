@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import *
+from polls.forms import *
 from polls.models import *
 from polls.tables import *
 from polls.predictor import *
@@ -42,7 +42,40 @@ def login_view(request):
 def verpaciente_view(request, paciente_id):
     paciente = Paciente.objects.get(paciente_id = paciente_id)
     listaControles = ControlTable(Control.objects.filter(paciente=paciente))
-    return render(request, 'verpaciente.html', {'paciente': paciente, 'listaControles': listaControles})
+    listaControlesInc = IncControlTable(Control.objects.filter(paciente=paciente).filter(control_estado = False))
+    paciente = Paciente.objects.get(paciente_id = paciente_id)
+    usuario = request.user
+    persona = Persona.objects.get(user = usuario)
+    profesional = Profesional.objects.get(persona = persona)
+    print(profesional.profesional_tipo)
+    print(usuario)    
+    if request.method == 'POST':
+        form = FormIniciarControl(request.POST, request.FILES)
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            fecha = cleaned_data.get('fecha')
+            inr = cleaned_data.get('inr')
+            dosis = cleaned_data.get('dosis')
+            control = Control()
+            control.paciente = Paciente.objects.get(paciente_id=paciente_id)
+            control.control_fecha = fecha
+            control.control_inr = inr
+            control.control_dosis = dosis
+            control.save()
+            print("control")
+            messages.success(request, 'Control ingresado con éxito')
+            form = FormIniciarControl()
+            return HttpResponseRedirect(reverse('verpaciente', kwargs={'paciente_id': paciente_id}))
+    else:
+        form = FormIniciarControl(initial={'fecha': date.today(), 'inr': 0, 'dosis': 0})
+    return render(request, 'verpaciente.html', {
+        'form': form, 
+        'paciente': paciente, 
+        'listaControles': listaControles, 
+        'profesional': profesional,
+        'listaControlesInc': listaControlesInc
+        })
 
 @login_required(login_url='login')
 def registro_usuario(request):
@@ -204,10 +237,13 @@ def ajax_view_inr(request):
             inr_p = "Faltan datos para la predicción"
             return HttpResponse(inr_p)
 
-def ajax_view_modal(request):
+def ajax_view_modal(request, control_id):
     if request.method == 'GET':
         dosis = "wena zi"
-        return HttpResponse(dosis)
+        print("hola")
+        return render_to_response("modal.html")
+    print("hola")
+    return render_to_response("modal.html")
 
 def logout_view(request):
     logout(request)

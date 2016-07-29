@@ -2,51 +2,96 @@
 {% load table_tags %}
 
 {% block title %}T.A.C.O. Smart | Controles{% endblock %}
-{%block heading%}<script>
-        $( ".btn" ).click(function() {
-                $.ajax({
-                    url: "{% url 'ajax_dosis' %}",
-                    type: "get",
-                    success: function(dosis){
-                        alert(dosis);
-                    }
-                });
-            });
-        </script> {% endblock%}
+{%block heading%}{%endblock%}
 {% block body %}
-    <div class="container" style="margin-top: 10px">
-        <form>
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+    <div class="container" style="margin-top: 10px">        
         <h2>Paciente: {{ paciente.persona.persona_nombre }} {{ paciente.persona.persona_apellidopaterno }} {{ paciente.persona.persona_apellidomaterno }}</h2>
         {% include '_messages.html' %}
         {% if mensaje %}
             <div class="alert alert-danger">
             {{ mensaje }}<button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
+        {% endif %}       
+        {% if profesional.profesional_tipo == 0 %}
+            {% render_table listaControles %}
+        {% else %}
+            {% render_table listaControlesInc %}
         {% endif %}
         <script>
-        $( ".btn" ).click(function() {
-                $.ajax({
-                    url: "{% url 'ajax_dosis' %}",
-                    type: "get",
-                    success: function(dosis){
-                        alert(dosis);
-                    }
-                });
-            });
+        $('#controltable tr td a').on('focus', inicio);
+            function inicio() {
+                console.log('hola');                
+            }
         </script>
-        {% render_table listaControles %}
-        <script>
-        $( "#detalle" ).click(function() {
-                $.ajax({
-                    url: "{% url 'ajax_dosis' %}",
-                    type: "get",
-                    success: function(dosis){
-                        alert(dosis);
-                    }
-                });
-            });
-        </script>
-        <a href="control" class="btn btn-primary" type="submit">Nuevo Control</a>
-        </form>
+        {% if profesional.profesional_tipo == 0 %}
+            <a data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
+        {% endif %}
     </div>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Nuevo Control</h4>
+                </div>
+                <form id="form" method="post" action="" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ingresar</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+            <script>
+                $("#modal").on('hidden.bs.modal', function () {
+                    $("#id_dosis").val(0);
+                    $('#id_inr').val(0)
+                });
+
+                $( "#id_inr" ).change(function() {
+                    $.ajax({
+                        data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
+                        url: "{% url 'ajax_dosis' %}",
+                        type: "get",
+                        success: function(dosis){
+                            if (dosis != 0) {
+                                $('#id_dosis').val(dosis);
+                                $('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
+                                $('#id_dosis').popover('show');                            
+                            }
+                            else{
+                                $('#id_dosis').val(dosis); 
+                                $('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
+                                $('#id_dosis').popover('show');
+                            }
+                            setTimeout(function () {
+                                    $('#id_dosis').popover('hide');
+                                }, 2000);
+                        }
+                    });
+                });
+
+                $( "#id_dosis" ).change(function() {
+                    $.ajax({
+                        data: {'dosis': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
+                        url: "{% url 'ajax_inr' %}",
+                        type: "get",
+                        success: function(inr){
+                            $('#id_inr_predicho').val(inr);
+                        }
+                    });
+                });
+                
+            </script>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --> 
 {% endblock body %}

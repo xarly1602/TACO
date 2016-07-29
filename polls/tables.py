@@ -43,6 +43,20 @@ class ControlTable(Table):
     #control_fechasiguiente = Column() 
     #control_lugar = Column(field='control_lugar', header=u'Lugar')
     name = LinkColumn(header=u'Ver detalle', links=[
-        Link(attrs={'id':'detalle', 'class': 'btn'}, text='Ver')])
+        Link(viewname='modal', args=(A('control_id'),), attrs={'class': 'detalle fa fa-search btn', 'data-toggle': 'modal', 'data-target': '#modal'}, text='')])
+    class Meta:
+    	model = Control
+
+class IncControlTable(Table):
+	#paciente = Column()
+    #persona = Column()
+    control_fecha = Column(field='control_fecha', header=u'Fecha Control')
+    #medicamento = Column(field='medicamento.medicamento_nombre', header=u'Medicamento')
+    control_inr = Column(field='control_inr', header=u'INR')
+    control_dosis = Column(field='control_dosis', header=u'Dosis')
+    #control_fechasiguiente = Column() 
+    #control_lugar = Column(field='control_lugar', header=u'Lugar')
+    name = LinkColumn(header=u'Ingresar control', links=[
+        Link(viewname='control', args=(A('paciente_id'),), attrs={'class': 'detalle fa fa-pencil btn'}, text='')])
     class Meta:
     	model = Control

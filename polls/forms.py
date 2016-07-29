@@ -142,6 +142,15 @@ class FormRegistroPaciente(forms.Form):
             raise forms.ValidationError('Ingrese una fecha válida')
         return fecha
 
+class FormIniciarControl(forms.Form):
+    fecha = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = True)
+    inr = forms.FloatField(min_value=0, max_value=10,widget=NumberInput(attrs={'type': 'number', 'step': "0.1"}))
+    dosis = forms.FloatField(min_value=0)
+    def clean_fecha(self):
+        fechaC = self.cleaned_data['fecha']        
+        if fechaC != None and fechaC > date.today():
+            raise forms.ValidationError('Ingrese una fecha válida')
+        return fechaC
 
 class FormNuevoControl(forms.Form):
    
