@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+
+{% block title %}T.A.C.O. Smart | Test{% endblock %}
+{%block heading%} {% endblock%}
+{% block body %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+
+{# Display a form #}
+<div class="container-fluid">
+    <div class="row">
+            <div  class="col-md-3 col-md-offset-4 col-xs-12">
+                <div class= "page-header">
+                    <h2>Editar datos de usuario</h2>
+                </div>
+                {% include '_messages.html' %}
+                <form  method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
+                </form>
+            </div>
+    </div>
+</div>
+
+
+{% endblock %}

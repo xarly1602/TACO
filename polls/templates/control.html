@@ -19,7 +19,7 @@
         {% include '_messages.html' %}
         <form id="form" method="post" action="" enctype="multipart/form-data">
             {% csrf_token %}
-            {% bootstrap_form form %}            
+            {% bootstrap_form form %}
             <button type="submit" class="btn btn-primary">Ingresar</button>
             <a href="{% url 'index' %}" class="btn btn-primary" type="submit">Volver</a>
             <script>
@@ -32,10 +32,10 @@
                         if (dosis != 0) {
                             $('#id_dosis').val(dosis);
                             $('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
-                            $('#id_dosis').popover('show');                            
+                            $('#id_dosis').popover('show');
                         }
                         else{
-                            $('#id_dosis').val(dosis); 
+                            $('#id_dosis').val(dosis);
                             $('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
                             $('#id_dosis').popover('show');
                         }

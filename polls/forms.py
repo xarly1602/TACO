@@ -17,6 +17,8 @@ class FormRegistroUsuario(forms.Form):
     sexo = forms.ChoiceField(widget=forms.Select, choices=(('0', 'Seleccionar Sexo'), ('1', 'Hombre',), ('2', 'Mujer',)))
     fecha_de_nacimiento = forms.DateField(widget=SelectDateWidget(years=range(1980, date.today().year+1)), required = False)
     correo = forms.EmailField(widget=forms.EmailInput)
+    tipo_empleado = forms.ChoiceField(widget=forms.Select, choices=(('', 'Seleccionar tipo de empleado'), ('0', 'No médico',), ('1', 'Médico',)))
+    cargo = forms.ModelChoiceField(queryset=Cargo.objects.all(), empty_label="Seleccione cargo", to_field_name="cargo_nombre", required=False)
     
     def clean_rut(self):        
         rut = self.cleaned_data['rut']
@@ -79,7 +81,7 @@ class FormRegistroPaciente(forms.Form):
     nombre = forms.CharField(min_length=3)
     apellido_paterno = forms.CharField(min_length=3)
     apellido_materno = forms.CharField(min_length=3)
-    diagnostico = forms.ModelChoiceField(queryset=Diagnostico.objects.all(), empty_label="Seleccione diagnostico", to_field_name="diagnostico_nombre")
+    diagnostico = forms.ModelChoiceField(queryset=Diagnostico.objects.all(), empty_label="Seleccione diagnostico", to_field_name="diagnostico_nombre", required=False)
     direccion = forms.CharField(min_length=3)
     telefono_de_contacto = forms.CharField(min_length=7)
     sexo = forms.ChoiceField(widget=forms.Select, choices=(('0', 'Seleccionar Sexo'), ('1', 'Hombre',), ('2', 'Mujer',)))
@@ -153,7 +155,6 @@ class FormIniciarControl(forms.Form):
         return fechaC
 
 class FormNuevoControl(forms.Form):
-   
     #paciente = models.ForeignKey('Paciente', models.DO_NOTHING, blank=True, null=True)
     #persona = models.ForeignKey('Profesional', models.DO_NOTHING, blank=True, null=True)
     medicamento = forms.ModelChoiceField(queryset=Medicamento.objects.all(), empty_label="Seleccione Medicamento", to_field_name="medicamento_nombre")
@@ -164,6 +165,7 @@ class FormNuevoControl(forms.Form):
     siguiente_control = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = False)
     lugar = forms.CharField(min_length=3)
     evolucion = forms.CharField(widget=forms.Textarea)
+    control_id = forms.CharField(required=False, widget=forms.HiddenInput())
 
     def clean_fecha(self):
         fechaC = self.cleaned_data['fecha']        

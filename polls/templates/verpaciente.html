@@ -23,38 +23,25 @@
             {% render_table listaControles %}
         {% else %}
             {% render_table listaControlesInc %}
-        {% endif %}
-        <script>
-        $('#controltable tr td a').on('focus', inicio);
-            function inicio() {
-                console.log('hola');                
-            }
-        </script>
+        {% endif %}      
         {% if profesional.profesional_tipo == 0 %}
-            <a data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
+            <a href="{% url 'modal' 0 %}" data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
         {% endif %}
+        <button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
     </div>
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Nuevo Control</h4>
                 </div>
-                <form id="form" method="post" action="" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Ingresar</button>
-                    </div>
-                </form>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                </div>
             </div><!-- /.modal-content -->
             <script>
                 $("#modal").on('hidden.bs.modal', function () {
-                    $("#id_dosis").val(0);
-                    $('#id_inr').val(0)
+                    $(this).removeData('bs.modal');
                 });
 
                 $( "#id_inr" ).change(function() {
