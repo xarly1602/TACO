@@ -18,7 +18,7 @@
 			<p>INR predicho: <t>{{control.control_inr_p}}</p>
 			<p>Dosis predicha: <t>{{control.control_dosis_p}}</p>
 			<p>Evolucion: <t>{{control.control_evolucion}}</p>
-			<p>Estado: <t>{{control.control_estado}}</p>
+			<p>Estado: <t> {% if control.control_estado %} Terminado {% else %} Pendiente {% endif %}</p>
         </div>
         <div class="modal-footer">
         </div>

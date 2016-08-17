@@ -147,7 +147,8 @@ def registro_usuario(request):
 def editar_usuario(request):
 	usuario = request.user
 	persona = Persona.objects.get(user=usuario)
-	persona = Persona.objects.get(persona_id = persona.persona_id)
+	pid = persona.persona_id
+	persona = Persona.objects.get(persona_id = pid)
 	profesional = Profesional.objects.get(persona=persona)
 	if request.method == 'POST':
 		form = FormRegistroUsuario(request.POST, request.FILES)
@@ -382,13 +383,14 @@ def ajax_view_modal(request, control_id):
     if request.method == 'GET':
         if tipo == 1:
             control = Control.objects.get(control_id=control_id)
+            paciente = control.paciente
             form = FormNuevoControl(initial={
                 'fecha': control.control_fecha, 
                 'inr': control.control_inr, 
                 'dosis': control.control_dosis,
                 'inr_predicho': control.control_inr_p,
                 'control_id': control.control_id})
-            return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form, 'control': control}, context_instance=RequestContext(request)))
+            return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form, 'control': control, 'paciente': paciente}, context_instance=RequestContext(request)))
         elif tipo == 0:
             form = FormIniciarControl(initial={'fecha': date.today(), 'inr': 0, 'dosis': 0})
             return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form}, context_instance=RequestContext(request)))
@@ -411,3 +413,9 @@ def logout_view(request):
 def listarPersonas(request):
     listarPersonas = PersonaTable()
     return render(request, "index.html", {'listarPersonas': listarPersonas})
+
+def handler404(request):
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response

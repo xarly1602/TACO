@@ -25,7 +25,7 @@ SECRET_KEY = 'b2b0#j^$fyu=+xp+aqw1&+=ftp+(=m-b1n-$fm3yzg^)dkyj#e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 

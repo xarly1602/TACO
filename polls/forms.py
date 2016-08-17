@@ -76,7 +76,7 @@ class FormRegistroUsuario(forms.Form):
         return fecha
 
 class FormRegistroPaciente(forms.Form):
-    rut = forms.CharField(min_length=3)
+    rut = forms.CharField(min_length=2)
     numero_de_ficha = forms.IntegerField()
     nombre = forms.CharField(min_length=3)
     apellido_paterno = forms.CharField(min_length=3)
@@ -147,7 +147,7 @@ class FormRegistroPaciente(forms.Form):
 class FormIniciarControl(forms.Form):
     fecha = forms.DateField(widget=SelectDateWidget(years=range(1960, date.today().year+1)), required = True)
     inr = forms.FloatField(min_value=0, max_value=10,widget=NumberInput(attrs={'type': 'number', 'step': "0.1"}))
-    dosis = forms.FloatField(min_value=0)
+    #dosis = forms.FloatField(min_value=0)
     def clean_fecha(self):
         fechaC = self.cleaned_data['fecha']        
         if fechaC != None and fechaC > date.today():
