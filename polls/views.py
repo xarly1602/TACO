@@ -148,8 +148,9 @@ def editar_usuario(request):
 	usuario = request.user
 	persona = Persona.objects.get(user=usuario)
 	pid = persona.persona_id
-	persona = Persona.objects.get(persona_id = pid)
-	profesional = Profesional.objects.get(persona=persona)
+	p = Persona.objects.get(persona_id = pid)
+	profesional = Profesional.objects.get(persona=p)
+	persona = profesional.persona
 	if request.method == 'POST':
 		form = FormRegistroUsuario(request.POST, request.FILES)
 		if form.is_valid():
@@ -394,7 +395,6 @@ def ajax_view_modal(request, control_id):
         elif tipo == 0:
             form = FormIniciarControl(initial={'fecha': date.today(), 'inr': 0, 'dosis': 0})
             return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form}, context_instance=RequestContext(request)))
-    print("hola")
     return render_to_response("ingresarcontrol.html")
 
 def ajax_view_control(request, control_id):
