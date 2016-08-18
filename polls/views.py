@@ -103,7 +103,6 @@ def verpaciente_view(request, paciente_id):
 		'listaControlesInc': listaControlesInc
 		})
 
-#@login_required(login_url='login')
 def registro_usuario(request):
 	if request.method == 'POST':
 		form = FormRegistroUsuario(request.POST, request.FILES)
