@@ -9,16 +9,16 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('polls', '0005_remove_paciente_comuna_id'),
-    ]
+	dependencies = [
+		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+		('polls', '0005_remove_paciente_comuna_id'),
+	]
 
-    operations = [
-        migrations.AddField(
-            model_name='persona',
-            name='user',
-            field=models.OneToOneField(default=0, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-            preserve_default=False,
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='persona',
+			name='user',
+			field=models.OneToOneField(default=0, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+			preserve_default=False,
+		),
+	]

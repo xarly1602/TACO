@@ -1,0 +1,32 @@
+{% extends "template.html" %}
+{% load table_tags %}
+
+{% block title %}T.A.C.O. Smart | Activar usuario{% endblock %}
+{%block heading%}{%endblock%}
+{% block body %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<div class="row"  >
+	<div class="col-md-3 col-sm-offset-4">
+		<div class="page-header">
+			<h2>Activar Usuario</h2>
+		</div>
+		{% if usuario.is_active %}
+			El usuario consultado ya se encuentra activo en el sistema
+		{%  else %}
+			El usuario {{persona.persona_nombre}} {{persona.persona_apellidopaterno}} se ha registrado en el sistema. Si la información que se muestra a continuación es correcta, por favor presione el botón activar usuario al final de la página.
+			{% include '_messages.html' %}
+			<form id="form" method="post" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% bootstrap_form form %}
+				<button type="submit" class="btn btn-primary">Activar usuario</button>			
+			</form>
+		{% endif %}
+	</div>
+</div>
+
+{% endblock body %}

@@ -2,12 +2,12 @@
 {% load bootstrap3 %}
 
 <div class="modal-content col-md-5 col-sm-offset-3">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title" id="myModalLabel">Paciente {{paciente.persona.persona_nombre}} {{paciente.persona.persona_apellidopaterno}}</h4>
-    </div>
-    <form id="form_modal" method="post" action="" enctype="multipart/form-data">
-        <div class="modal-body">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id="myModalLabel">Paciente {{paciente.persona.persona_nombre}} {{paciente.persona.persona_apellidopaterno}}</h4>
+	</div>
+	<form id="form_modal" method="post" action="" enctype="multipart/form-data">
+		<div class="modal-body">
 			<p>Medicamento: </t> {{control.medicamento}}</p>
 			<p>Diagnostico: <t>{{control.diagnostico}}</p>
 			<p>Fecha: <t>{{control.control_fecha}}</p>
@@ -19,8 +19,8 @@
 			<p>Dosis predicha: <t>{{control.control_dosis_p}}</p>
 			<p>Evolucion: <t>{{control.control_evolucion}}</p>
 			<p>Estado: <t> {% if control.control_estado %} Terminado {% else %} Pendiente {% endif %}</p>
-        </div>
-        <div class="modal-footer">
-        </div>
-    </form>
+		</div>
+		<div class="modal-footer">
+		</div>
+	</form>
 </div><!-- /.modal-content -->

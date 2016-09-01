@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 
-{% block title %}T.A.C.O. Smart | Ingresar Paciente{% endblock %}
+{% block title %}T.A.C.O. Smart | Editar Paciente{% endblock %}
 {%block head%} 
 
 {% endblock%}
@@ -12,18 +12,18 @@
 {% bootstrap_javascript %}
 
 <div class="row"  >
-    <div class="col-md-3 col-sm-offset-4">
-        <div class="page-header">
-            <h2>Editar Paciente</h2>
-        </div>
-        {% include '_messages.html' %}
-        <form method="post" action="" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-            <button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
-        </form>
-    </div>
+	<div class="col-md-3 col-sm-offset-4">
+		<div class="page-header">
+			<h2>Editar Paciente</h2>
+		</div>
+		{% include '_messages.html' %}
+		<form method="post" action="" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+			<button type="submit" class="btn btn-primary">Guardar cambios</button>
+			<button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
+		</form>
+	</div>
 </div>
 
 {% endblock %}

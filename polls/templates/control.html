@@ -12,53 +12,53 @@
 {% bootstrap_javascript %}
 
 <div class="row"  >
-    <div class="col-md-3 col-sm-offset-4">
-        <div class="page-header">
-            <h2>Registro Control</h2>
-        </div>
-        {% include '_messages.html' %}
-        <form id="form" method="post" action="" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <button type="submit" class="btn btn-primary">Ingresar</button>
-            <a href="{% url 'index' %}" class="btn btn-primary" type="submit">Volver</a>
-            <script>
-            $( "#id_inr" ).change(function() {
-                $.ajax({
-                    data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
-                    url: "{% url 'ajax_dosis' %}",
-                    type: "get",
-                    success: function(dosis){
-                        if (dosis != 0) {
-                            $('#id_dosis').val(dosis);
-                            $('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
-                            $('#id_dosis').popover('show');
-                        }
-                        else{
-                            $('#id_dosis').val(dosis);
-                            $('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
-                            $('#id_dosis').popover('show');
-                        }
-                        setTimeout(function () {
-                                $('#id_dosis').popover('hide');
-                            }, 2000);
-                    }
-                });
-            });
+	<div class="col-md-3 col-sm-offset-4">
+		<div class="page-header">
+			<h2>Registro Control</h2>
+		</div>
+		{% include '_messages.html' %}
+		<form id="form" method="post" action="" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+			<button type="submit" class="btn btn-primary">Ingresar</button>
+			<a href="{% url 'index' %}" class="btn btn-primary" type="submit">Volver</a>
+			<script>
+			$( "#id_inr" ).change(function() {
+				$.ajax({
+					data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
+					url: "{% url 'ajax_dosis' %}",
+					type: "get",
+					success: function(dosis){
+						if (dosis != 0) {
+							$('#id_dosis').val(dosis);
+							$('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
+							$('#id_dosis').popover('show');
+						}
+						else{
+							$('#id_dosis').val(dosis);
+							$('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
+							$('#id_dosis').popover('show');
+						}
+						setTimeout(function () {
+								$('#id_dosis').popover('hide');
+							}, 2000);
+					}
+				});
+			});
 
-            $( "#id_dosis" ).change(function() {
-                $.ajax({
-                    data: {'dosis': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
-                    url: "{% url 'ajax_inr' %}",
-                    type: "get",
-                    success: function(inr){
-                        $('#id_inr_predicho').val(inr);
-                    }
-                });
-            });
-            </script>
-        </form>
-    </div>
+			$( "#id_dosis" ).change(function() {
+				$.ajax({
+					data: {'dosis': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
+					url: "{% url 'ajax_inr' %}",
+					type: "get",
+					success: function(inr){
+						$('#id_inr_predicho').val(inr);
+					}
+				});
+			});
+			</script>
+		</form>
+	</div>
 </div>
 
 {% endblock %}

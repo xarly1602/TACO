@@ -1,0 +1,24 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+<div class="modal-content col-md-5 col-sm-offset-3">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id="myModalLabel">Control</h4>
+	</div>
+	<form id="form_modal" method="post" action="" enctype="multipart/form-data">
+		<div class="modal-body">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+		</div>
+		<div class="modal-footer">
+			<a href="{% url 'esquema' control.control_id %}" class="btn btn-primary" type="submit">Descargar</a> <button type="submit" class="btn btn-secondary">Guardar</button>
+		</div>
+		<script>
+		$("#modal").on('hidden.bs.modal', function () {
+			$(this).removeData('bs.modal');
+			location.reload();
+		});
+		</script>
+	</form>
+</div>

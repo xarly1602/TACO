@@ -2,55 +2,58 @@
 {% load bootstrap3 %}
 
 <div class="modal-content col-md-5 col-sm-offset-3">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title" id="myModalLabel">Control</h4>
-    </div>
-    <form id="form_modal" method="post" action="" enctype="multipart/form-data">
-        <div class="modal-body">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-        </div>
-        <script type="text/javascript">
-            
-        </script>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Ingresar</button>
-        </div>
-        <script>
-            $( "#id_inr" ).change(function() {
-                $.ajax({
-                    data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
-                    url: "{% url 'ajax_dosis' %}",
-                    type: "get",
-                    success: function(dosis){
-                        if (dosis != 0) {
-                            $('#id_dosis').val(dosis);
-                            $('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
-                            $('#id_dosis').popover('show');                            
-                        }
-                        else{
-                            $('#id_dosis').val(dosis); 
-                            $('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
-                            $('#id_dosis').popover('show');
-                        }
-                        setTimeout(function () {
-                                $('#id_dosis').popover('hide');
-                            }, 2000);
-                    }
-                });
-            });
-
-            $( "#id_dosis" ).change(function() {
-                $.ajax({
-                    data: {'dosis': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
-                    url: "{% url 'ajax_inr' %}",
-                    type: "get",
-                    success: function(inr){
-                        $('#id_inr_predicho').val(inr);
-                    }
-                });
-            });
-</script>
-    </form>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id="myModalLabel">Control</h4>
+	</div>
+	<form id="form_modal" method="post" action="" enctype="multipart/form-data">
+		<div class="modal-body">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary">Ingresar</button>
+		</div>
+		
+	</form>
 </div><!-- /.modal-content -->
+<script>
+	$( "#id_inr" ).change(function() {
+		console.log('cambio');
+		$.ajax({
+			data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
+			url: "{% url 'ajax_dosis' %}",
+			type: "get",
+			success: function(dosis){
+				if (dosis != 0) {
+					$('#id_dosis').val(dosis);
+					$('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
+					$('#id_dosis').popover('show');
+				}
+				else{
+					$('#id_dosis').val(dosis); 
+					$('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
+					$('#id_dosis').popover('show');
+				}
+				setTimeout(function () {
+						$('#id_dosis').popover('hide');
+					}, 2000);
+			}
+		});
+	});
+
+	$( "#id_dosis" ).change(function() {
+		$.ajax({
+			data: {'dosis': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
+			url: "{% url 'ajax_inr' %}",
+			type: "get",
+			success: function(inr){
+				$('#id_inr_predicho').val(inr);
+			}
+		});
+	});
+	$("#modal").on('hidden.bs.modal', function () {
+		$(this).removeData('bs.modal');
+		location.reload();
+	});
+</script>

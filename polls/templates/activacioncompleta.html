@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+{% load table_tags %}
+
+{% block title %}T.A.C.O. Smart | Activación completa{% endblock %}
+{%block heading%}{%endblock%}
+{% block body %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<div class="row"  >
+	<div class="col-md-3 col-sm-offset-4">
+		<div class="page-header">
+			<h2>Activar Usuario</h2>
+		</div>
+			{% include '_messages.html' %}
+	</div>
+</div>
+
+{% endblock body %}

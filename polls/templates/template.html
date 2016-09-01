@@ -1,98 +1,105 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="keywords" content="footer, address, phone, icons" />
-        <title>{% block title %} {% endblock %}</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        {% load staticfiles %}
-        <link rel="stylesheet" href="{% static 'css/demo.css'%}">
-        <!--link rel="stylesheet" href="{% static 'css/custom.css'%}"-->
-        <link rel="stylesheet" href="{% static 'css/footerDemo.css'%}">
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">    
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-        <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
-        {% block head %} {% endblock %}
-    </head>
-    <body>
-    	<nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand page-scroll" href="{% url 'index' %}">T.A.C.O. Smart</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}                    
-                        <li><a href="{% url 'editarperfil' %}">Editar Perfil</a></li>
-                        <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
-                    {% else %}
-                        <li><a class="page-scroll" href="#about">Acerca de nosotros</a></li>
-                        <li><a class="page-scroll" href="#services">Servicios</a></li>
-                        <li><a class="page-scroll" href="#contact">Contacto</a></li>    
-                        <li><a class="page-scroll" href="{% url 'registro' %}">Registrarse</a></li>               
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-        </nav>
-            <h1>{% block heading %}{% endblock %}</h1>        
-            {% block body %}
-            {% load bootstrap3 %}
-            {# Load CSS and JavaScript #}
-            {% bootstrap_css %}
-            {% bootstrap_javascript %}
-            {# Display django.contrib.messages as Bootstrap alerts #}        
-            {% endblock %}
-        <footer class="footer-distributed">
-            <div class="footer-left">
-                <a href="http://www.mizc.cl">
-                    <h3>MIZC<span> SpA</span></h3>
-                </a>
-                <p class="footer-links">
-                    <a href="#">Inicio</a>
-                    ·                   
-                    <a href="#">¿Quienes Somos?</a>
-                    ·
-                    <a href="#">Faq</a>
-                    ·
-                    <a href="#">Contacto</a>
-                </p>
-                <p class="footer-company-name">MIZC SpA &copy; 2016</p>
-            </div>
-            <div class="footer-center">
-                <div>
-                    <i class="fa fa-map-marker"></i>
-                    <p><span>Barros Borgoño 71, Oficina 1105, Providencia</span> Santiago, Chile</p>
-                </div>
-                <div>
-                    <i class="fa fa-phone"></i>
-                    <p>+1 555 123456</p>
-                </div>
-                <div>
-                    <i class="fa fa-envelope"></i>
-                    <p><a href="mailto:support@company.com">support@mizc.cl</a></p>
-                </div>
-            </div>
-            <div class="footer-right">
-                <p class="footer-company-about">
-                    <span>T.A.C.O. Smart</span>
-                    T.A.C.O. Smart es una aplicacion capaz de....
-                </p>
-                <div class="footer-icons">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-linkedin"></i></a>
-                    <a href="#"><i class="fa fa-github"></i></a>
-                </div>
-            </div>
-        </footer>
-    </body>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="keywords" content="footer, address, phone, icons" />
+		<title>{% block title %} {% endblock %}</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		{% load staticfiles %}
+		<link rel="stylesheet" href="{% static 'css/demo.css'%}">
+		<!--link rel="stylesheet" href="{% static 'css/custom.css'%}"-->
+		<link rel="stylesheet" href="{% static 'css/footerDemo.css'%}">
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">	
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+		<link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+		<link rel="shortcut icon" href="{% static 'img/tacosmart_logo_figura.png'%}">
+		{% block head %} {% endblock %}
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand page-scroll" href="{% url 'index' %}"><img width="40%"  src="{% static 'img/tacosmart_logo_texto.png'%}"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-left">
+					{% if user.is_authenticated %}					
+						<li><a href="{% url 'index' %}">Pacientes</a></li>
+						<li><a href="{% url 'index_c' %}">Lista de trabajo</a></li>
+					{% endif %}
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated %}					
+						<li><a href="{% url 'editarperfil' %}">Editar Perfil</a></li>
+						<li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+					{% else %}
+						<li><a class="page-scroll" href="#about">Acerca de nosotros</a></li>
+						<li><a class="page-scroll" href="#services">Servicios</a></li>
+						<li><a class="page-scroll" href="#contact">Contacto</a></li>	
+						<li><a class="page-scroll" href="{% url 'registro' %}">Registrarse</a></li>			   
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+		</nav>
+			<h1>{% block heading %}{% endblock %}</h1>		
+			{% block body %}
+			{% load bootstrap3 %}
+			{# Load CSS and JavaScript #}
+			{% bootstrap_css %}
+			{% bootstrap_javascript %}
+			{# Display django.contrib.messages as Bootstrap alerts #}		
+			{% endblock %}
+		<footer class="footer-distributed">
+			<div class="footer-left">
+				<a href="http://www.mizc.cl">
+					<img width="10%" height="10%" src="{% static 'img/mizc_logo.png'%}">
+				</a>
+				<p class="footer-links">
+					<a href="#">Inicio</a>
+					·				   
+					<a href="#">¿Quienes Somos?</a>
+					·
+					<a href="#">Faq</a>
+					·
+					<a href="#">Contacto</a>
+				</p>
+				<p class="footer-company-name">MIZC SpA &copy; 2016</p>
+			</div>
+			<div class="footer-center">
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p><span>Barros Borgoño 71, Oficina 1105, Providencia</span> Santiago, Chile</p>
+				</div>
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>+1 555 123456</p>
+				</div>
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:support@company.com">support@mizc.cl</a></p>
+				</div>
+			</div>
+			<div class="footer-right">
+				<p class="footer-company-about">
+					<span>T.A.C.O. Smart</span>
+					T.A.C.O. Smart es una aplicacion capaz de....
+				</p>
+				<div class="footer-icons">
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+				</div>
+			</div>
+		</footer>
+	</body>
 </html>

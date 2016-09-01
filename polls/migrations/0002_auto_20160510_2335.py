@@ -7,27 +7,27 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('polls', '0001_initial'),
-    ]
+	dependencies = [
+		('polls', '0001_initial'),
+	]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='paciente',
-            name='id',
-        ),
-        migrations.RemoveField(
-            model_name='profesional',
-            name='id',
-        ),
-        migrations.AlterField(
-            model_name='paciente',
-            name='paciente_id',
-            field=models.AutoField(primary_key=True, serialize=False),
-        ),
-        migrations.AlterField(
-            model_name='profesional',
-            name='profesional_id',
-            field=models.AutoField(primary_key=True, serialize=False),
-        ),
-    ]
+	operations = [
+		migrations.RemoveField(
+			model_name='paciente',
+			name='id',
+		),
+		migrations.RemoveField(
+			model_name='profesional',
+			name='id',
+		),
+		migrations.AlterField(
+			model_name='paciente',
+			name='paciente_id',
+			field=models.AutoField(primary_key=True, serialize=False),
+		),
+		migrations.AlterField(
+			model_name='profesional',
+			name='profesional_id',
+			field=models.AutoField(primary_key=True, serialize=False),
+		),
+	]

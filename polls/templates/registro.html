@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 
-{% block title %}T.A.C.O. Smart | Test{% endblock %}
+{% block title %}T.A.C.O. Smart | Registro{% endblock %}
 {%block heading%} {% endblock%}
 {% block body %}
 {# Load the tag library #}
@@ -14,20 +14,20 @@
 
 {# Display a form #}
 <div class="container-fluid">
-    <div class="row">
-            <div  class="col-md-3 col-md-offset-4 col-xs-12">
-                <div class= "page-header">
-                    <h2>Registro Usuario</h2>
-                </div>
-                {% include '_messages.html' %}
-                <form  method="post" action="" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+	<div class="row">
+			<div  class="col-md-3 col-md-offset-4 col-xs-12">
+				<div class= "page-header">
+					<h2>Registro Usuario</h2>
+				</div>
+				{% include '_messages.html' %}
+				<form  method="post" action="" enctype="multipart/form-data">
+					{% csrf_token %}
+					{% bootstrap_form form %}
+					<button type="submit" class="btn btn-primary">Registrar</button>
 
-                </form>
-            </div>
-    </div>
+				</form>
+			</div>
+	</div>
 </div>
 
 

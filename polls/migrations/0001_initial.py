@@ -8,216 +8,216 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    initial = True
+	initial = True
 
-    dependencies = [
-    ]
+	dependencies = [
+	]
 
-    operations = [
-        migrations.CreateModel(
-            name='Cargo',
-            fields=[
-                ('cargo_id', models.AutoField(primary_key=True, serialize=False)),
-                ('cargo_nombre', models.CharField(blank=True, max_length=128, null=True)),
-            ],
-            options={
-                'db_table': 'cargo',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Ciudad',
-            fields=[
-                ('ciudad_id', models.AutoField(primary_key=True, serialize=False)),
-                ('ciudad_nombre', models.CharField(blank=True, max_length=1024, null=True)),
-            ],
-            options={
-                'db_table': 'ciudad',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Comuna',
-            fields=[
-                ('comuna_id', models.AutoField(primary_key=True, serialize=False)),
-                ('comuna_nombre', models.CharField(blank=True, max_length=256, null=True)),
-                ('ciudad', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Ciudad')),
-            ],
-            options={
-                'db_table': 'comuna',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Control',
-            fields=[
-                ('control_id', models.AutoField(primary_key=True, serialize=False)),
-                ('profesional_id', models.IntegerField(blank=True, null=True)),
-                ('control_fecha', models.DateField(blank=True, null=True)),
-                ('control_inr', models.FloatField(blank=True, null=True)),
-                ('control_dosis', models.FloatField(blank=True, null=True)),
-                ('control_fechasiguiente', models.DateField(blank=True, null=True)),
-                ('control_lugar', models.CharField(blank=True, max_length=512, null=True)),
-            ],
-            options={
-                'db_table': 'control',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Historialclinico',
-            fields=[
-                ('historial_id', models.AutoField(primary_key=True, serialize=False)),
-                ('paciente_id', models.IntegerField()),
-                ('historial_anamnesis', models.TextField(blank=True, null=True)),
-            ],
-            options={
-                'db_table': 'historialclinico',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Medicamento',
-            fields=[
-                ('medicamento_id', models.AutoField(primary_key=True, serialize=False)),
-                ('medicamento_nombre', models.CharField(blank=True, max_length=256, null=True)),
-            ],
-            options={
-                'db_table': 'medicamento',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Paciente',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('paciente_id', models.IntegerField(blank=True, null=True)),
-                ('comuna_id', models.IntegerField(blank=True, null=True)),
-                ('persona_nombre', models.CharField(blank=True, max_length=256, null=True)),
-                ('persona_apellidopaterno', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_apellidomaterno', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_rut', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_sexo', models.IntegerField(blank=True, null=True)),
-                ('persona_direccion', models.CharField(blank=True, max_length=1024, null=True)),
-                ('persona_telefonocontacto', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_correo', models.CharField(blank=True, max_length=1024, null=True)),
-                ('persona_fechanacimiento', models.DateField(blank=True, null=True)),
-                ('paciente_nficha', models.IntegerField(blank=True, null=True)),
-                ('paciente_telefonoemergencia', models.CharField(blank=True, max_length=128, null=True)),
-                ('historial', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Historialclinico')),
-            ],
-            options={
-                'db_table': 'paciente',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Persona',
-            fields=[
-                ('persona_id', models.AutoField(primary_key=True, serialize=False)),
-                ('persona_nombre', models.CharField(blank=True, max_length=256, null=True)),
-                ('persona_apellidopaterno', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_apellidomaterno', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_rut', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_sexo', models.IntegerField(blank=True, null=True)),
-                ('persona_direccion', models.CharField(blank=True, max_length=1024, null=True)),
-                ('persona_telefonocontacto', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_correo', models.CharField(blank=True, max_length=1024, null=True)),
-                ('persona_fechanacimiento', models.DateField(blank=True, null=True)),
-                ('comuna', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Comuna')),
-            ],
-            options={
-                'db_table': 'persona',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Plansalud',
-            fields=[
-                ('plan_id', models.AutoField(primary_key=True, serialize=False)),
-                ('plan_nombre', models.CharField(blank=True, max_length=256, null=True)),
-            ],
-            options={
-                'db_table': 'plansalud',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Profesional',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('profesional_id', models.IntegerField(blank=True, null=True)),
-                ('comuna_id', models.IntegerField(blank=True, null=True)),
-                ('persona_nombre', models.CharField(blank=True, max_length=256, null=True)),
-                ('persona_apellidopaterno', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_apellidomaterno', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_rut', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_sexo', models.IntegerField(blank=True, null=True)),
-                ('persona_direccion', models.CharField(blank=True, max_length=1024, null=True)),
-                ('persona_telefonocontacto', models.CharField(blank=True, max_length=128, null=True)),
-                ('persona_correo', models.CharField(blank=True, max_length=1024, null=True)),
-                ('persona_fechanacimiento', models.DateField(blank=True, null=True)),
-                ('profesional_tipo', models.IntegerField(blank=True, null=True)),
-                ('cargo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Cargo')),
-                ('persona', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Persona')),
-            ],
-            options={
-                'db_table': 'profesional',
-                'managed': True,
-            },
-        ),
-        migrations.CreateModel(
-            name='Region',
-            fields=[
-                ('region_id', models.AutoField(primary_key=True, serialize=False)),
-                ('region_nombre', models.CharField(blank=True, max_length=1024, null=True)),
-            ],
-            options={
-                'db_table': 'region',
-                'managed': True,
-            },
-        ),
-        migrations.AddField(
-            model_name='paciente',
-            name='persona',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Persona'),
-        ),
-        migrations.AddField(
-            model_name='paciente',
-            name='plan',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Plansalud'),
-        ),
-        migrations.AddField(
-            model_name='historialclinico',
-            name='persona',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Paciente'),
-        ),
-        migrations.AddField(
-            model_name='control',
-            name='historial',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Historialclinico'),
-        ),
-        migrations.AddField(
-            model_name='control',
-            name='medicamento',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Medicamento'),
-        ),
-        migrations.AddField(
-            model_name='control',
-            name='persona',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Profesional'),
-        ),
-        migrations.AddField(
-            model_name='ciudad',
-            name='region',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Region'),
-        ),
-        migrations.AlterUniqueTogether(
-            name='profesional',
-            unique_together=set([('persona', 'profesional_id')]),
-        ),
-        migrations.AlterUniqueTogether(
-            name='paciente',
-            unique_together=set([('persona', 'paciente_id')]),
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='Cargo',
+			fields=[
+				('cargo_id', models.AutoField(primary_key=True, serialize=False)),
+				('cargo_nombre', models.CharField(blank=True, max_length=128, null=True)),
+			],
+			options={
+				'db_table': 'cargo',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Ciudad',
+			fields=[
+				('ciudad_id', models.AutoField(primary_key=True, serialize=False)),
+				('ciudad_nombre', models.CharField(blank=True, max_length=1024, null=True)),
+			],
+			options={
+				'db_table': 'ciudad',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Comuna',
+			fields=[
+				('comuna_id', models.AutoField(primary_key=True, serialize=False)),
+				('comuna_nombre', models.CharField(blank=True, max_length=256, null=True)),
+				('ciudad', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Ciudad')),
+			],
+			options={
+				'db_table': 'comuna',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Control',
+			fields=[
+				('control_id', models.AutoField(primary_key=True, serialize=False)),
+				('profesional_id', models.IntegerField(blank=True, null=True)),
+				('control_fecha', models.DateField(blank=True, null=True)),
+				('control_inr', models.FloatField(blank=True, null=True)),
+				('control_dosis', models.FloatField(blank=True, null=True)),
+				('control_fechasiguiente', models.DateField(blank=True, null=True)),
+				('control_lugar', models.CharField(blank=True, max_length=512, null=True)),
+			],
+			options={
+				'db_table': 'control',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Historialclinico',
+			fields=[
+				('historial_id', models.AutoField(primary_key=True, serialize=False)),
+				('paciente_id', models.IntegerField()),
+				('historial_anamnesis', models.TextField(blank=True, null=True)),
+			],
+			options={
+				'db_table': 'historialclinico',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Medicamento',
+			fields=[
+				('medicamento_id', models.AutoField(primary_key=True, serialize=False)),
+				('medicamento_nombre', models.CharField(blank=True, max_length=256, null=True)),
+			],
+			options={
+				'db_table': 'medicamento',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Paciente',
+			fields=[
+				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('paciente_id', models.IntegerField(blank=True, null=True)),
+				('comuna_id', models.IntegerField(blank=True, null=True)),
+				('persona_nombre', models.CharField(blank=True, max_length=256, null=True)),
+				('persona_apellidopaterno', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_apellidomaterno', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_rut', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_sexo', models.IntegerField(blank=True, null=True)),
+				('persona_direccion', models.CharField(blank=True, max_length=1024, null=True)),
+				('persona_telefonocontacto', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_correo', models.CharField(blank=True, max_length=1024, null=True)),
+				('persona_fechanacimiento', models.DateField(blank=True, null=True)),
+				('paciente_nficha', models.IntegerField(blank=True, null=True)),
+				('paciente_telefonoemergencia', models.CharField(blank=True, max_length=128, null=True)),
+				('historial', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Historialclinico')),
+			],
+			options={
+				'db_table': 'paciente',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Persona',
+			fields=[
+				('persona_id', models.AutoField(primary_key=True, serialize=False)),
+				('persona_nombre', models.CharField(blank=True, max_length=256, null=True)),
+				('persona_apellidopaterno', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_apellidomaterno', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_rut', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_sexo', models.IntegerField(blank=True, null=True)),
+				('persona_direccion', models.CharField(blank=True, max_length=1024, null=True)),
+				('persona_telefonocontacto', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_correo', models.CharField(blank=True, max_length=1024, null=True)),
+				('persona_fechanacimiento', models.DateField(blank=True, null=True)),
+				('comuna', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Comuna')),
+			],
+			options={
+				'db_table': 'persona',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Plansalud',
+			fields=[
+				('plan_id', models.AutoField(primary_key=True, serialize=False)),
+				('plan_nombre', models.CharField(blank=True, max_length=256, null=True)),
+			],
+			options={
+				'db_table': 'plansalud',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Profesional',
+			fields=[
+				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('profesional_id', models.IntegerField(blank=True, null=True)),
+				('comuna_id', models.IntegerField(blank=True, null=True)),
+				('persona_nombre', models.CharField(blank=True, max_length=256, null=True)),
+				('persona_apellidopaterno', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_apellidomaterno', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_rut', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_sexo', models.IntegerField(blank=True, null=True)),
+				('persona_direccion', models.CharField(blank=True, max_length=1024, null=True)),
+				('persona_telefonocontacto', models.CharField(blank=True, max_length=128, null=True)),
+				('persona_correo', models.CharField(blank=True, max_length=1024, null=True)),
+				('persona_fechanacimiento', models.DateField(blank=True, null=True)),
+				('profesional_tipo', models.IntegerField(blank=True, null=True)),
+				('cargo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Cargo')),
+				('persona', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Persona')),
+			],
+			options={
+				'db_table': 'profesional',
+				'managed': True,
+			},
+		),
+		migrations.CreateModel(
+			name='Region',
+			fields=[
+				('region_id', models.AutoField(primary_key=True, serialize=False)),
+				('region_nombre', models.CharField(blank=True, max_length=1024, null=True)),
+			],
+			options={
+				'db_table': 'region',
+				'managed': True,
+			},
+		),
+		migrations.AddField(
+			model_name='paciente',
+			name='persona',
+			field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Persona'),
+		),
+		migrations.AddField(
+			model_name='paciente',
+			name='plan',
+			field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Plansalud'),
+		),
+		migrations.AddField(
+			model_name='historialclinico',
+			name='persona',
+			field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Paciente'),
+		),
+		migrations.AddField(
+			model_name='control',
+			name='historial',
+			field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Historialclinico'),
+		),
+		migrations.AddField(
+			model_name='control',
+			name='medicamento',
+			field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Medicamento'),
+		),
+		migrations.AddField(
+			model_name='control',
+			name='persona',
+			field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Profesional'),
+		),
+		migrations.AddField(
+			model_name='ciudad',
+			name='region',
+			field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='polls.Region'),
+		),
+		migrations.AlterUniqueTogether(
+			name='profesional',
+			unique_together=set([('persona', 'profesional_id')]),
+		),
+		migrations.AlterUniqueTogether(
+			name='paciente',
+			unique_together=set([('persona', 'paciente_id')]),
+		),
+	]

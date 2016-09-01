@@ -1,7 +1,7 @@
 {% extends "template.html" %}
 {% load table_tags %}
 
-{% block title %}T.A.C.O. Smart | Controles{% endblock %}
+{% block title %}T.A.C.O. Smart | {{ paciente.persona.persona_nombre }} {{ paciente.persona.persona_apellidopaterno }}{% endblock %}
 {%block heading%}{%endblock%}
 {% block body %}
 {# Load the tag library #}
@@ -11,74 +11,34 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-    <div class="container" style="margin-top: 10px">        
-        <h2>Paciente: {{ paciente.persona.persona_nombre }} {{ paciente.persona.persona_apellidopaterno }} {{ paciente.persona.persona_apellidomaterno }}</h2>
-        {% include '_messages.html' %}
-        {% if mensaje %}
-            <div class="alert alert-danger">
-            {{ mensaje }}<button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        {% endif %}       
-        {% if profesional.profesional_tipo == 0 %}
-            {% render_table listaControles %}
-        {% else %}
-            {% render_table listaControlesInc %}
-        {% endif %}      
-        {% if profesional.profesional_tipo == 0 %}
-            <a href="{% url 'modal' 0 %}" data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
-        {% endif %}
-        <button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
-    </div>
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div><!-- /.modal-content -->
-            <script>
-                $("#modal").on('hidden.bs.modal', function () {
-                    $(this).removeData('bs.modal');
-                });
-
-                $( "#id_inr" ).change(function() {
-                    $.ajax({
-                        data: {'inr': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
-                        url: "{% url 'ajax_dosis' %}",
-                        type: "get",
-                        success: function(dosis){
-                            if (dosis != 0) {
-                                $('#id_dosis').val(dosis);
-                                $('#id_dosis').popover({content: "Esta es la dosis sugerida para blabla", trigger: "manual"});
-                                $('#id_dosis').popover('show');                            
-                            }
-                            else{
-                                $('#id_dosis').val(dosis); 
-                                $('#id_dosis').popover({content: "No hay controles para predecir la dosis", trigger: "manual"});
-                                $('#id_dosis').popover('show');
-                            }
-                            setTimeout(function () {
-                                    $('#id_dosis').popover('hide');
-                                }, 2000);
-                        }
-                    });
-                });
-
-                $( "#id_dosis" ).change(function() {
-                    $.ajax({
-                        data: {'dosis': $(this).val(), 'id_paciente': {{paciente.paciente_id}} },
-                        url: "{% url 'ajax_inr' %}",
-                        type: "get",
-                        success: function(inr){
-                            $('#id_inr_predicho').val(inr);
-                        }
-                    });
-                });
-                
-            </script>
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal --> 
+	<div class="container" style="margin-top: 10px">
+		<h2>Paciente: {{ paciente.persona.persona_nombre }} {{ paciente.persona.persona_apellidopaterno }} {{ paciente.persona.persona_apellidomaterno }}</h2>
+		{% include '_messages.html' %}
+		{% if mensaje %}
+			<div class="alert alert-danger">
+			{{ mensaje }}<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}	   
+		{% if profesional.profesional_tipo == 0 %}
+			{% render_table listaControles %}
+		{% else %}
+			{% render_table listaControlesInc %}
+		{% endif %}	  
+		{% if profesional.profesional_tipo == 0 %}
+			<a href="{% url 'modal' 0 %}" data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
+		{% endif %}
+		<button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
+	</div>
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock body %}

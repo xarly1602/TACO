@@ -7,13 +7,13 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('polls', '0004_paciente_comuna_id'),
-    ]
+	dependencies = [
+		('polls', '0004_paciente_comuna_id'),
+	]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='paciente',
-            name='comuna_id',
-        ),
-    ]
+	operations = [
+		migrations.RemoveField(
+			model_name='paciente',
+			name='comuna_id',
+		),
+	]
