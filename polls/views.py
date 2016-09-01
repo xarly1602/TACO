@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 import datetime, csv
+import cStringIO as StringIO
+from cgi import escape
 from django.shortcuts import render, redirect, render_to_response
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
@@ -7,7 +9,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
+from django.template import RequestContext, Context
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 from polls.forms import *
 from polls.models import *
 from polls.tables import *
@@ -17,6 +21,7 @@ from polls.utilidades import *
 @login_required(login_url='login')
 def index_view_pacientes(request):
 	listarPersonas = PersonaTable()
+#	return render_to_pdf("pdf.html", {'pagesize':'A4'})
 	return render(request, "index.html", {'listarPersonas': listarPersonas})
 
 @login_required(login_url='login')
@@ -536,9 +541,37 @@ def esquema_view(request, control_id):
 	control = Control.objects.get(control_id=control_id)
 	esquema = Utilidades().esquemaSemanal(control.control_dosis)
 	nombre_archivo = 'Esquema' + control.paciente.persona.persona_rut
-	response = HttpResponse(content_type='text/csv')
-	response['Content-Disposition'] = 'attachment; filename="'+nombre_archivo+'.csv"'
-	writer = csv.writer(response)
-	writer.writerow(['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'])
-	writer.writerow(esquema)
-	return response
+	form = FormEsquema(initial={
+		'dia_1':esquema[0],
+		'dia_2':esquema[1],
+		'dia_3':esquema[2],
+		'dia_4':esquema[3],
+		'dia_5':esquema[4],
+		'dia_6':esquema[5],
+		'dia_7':esquema[6],
+		})
+	context = {
+		'form': form,
+		'esquema': esquema,
+	} 
+	return render_to_pdf("pdf.html", context)
+	#response = HttpResponse(content_type='text/csv')
+	#response['Content-Disposition'] = 'attachment; filename="'+nombre_archivo+'.csv"'
+	#writer = csv.writer(response)
+	#writer.writerow(['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'])
+	#writer.writerow(esquema)
+	#return response
+
+def pdf_view(request):
+	return render_to_pdf("pdf.html", {'pagesize':'A4','mylist': results})
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    #context = Context(context_dict)
+    html  = template.render(context_dict)
+    result = StringIO.StringIO()
+
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))

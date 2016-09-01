@@ -20,5 +20,6 @@ urlpatterns = [
 	url(r'^esquema/(?P<control_id>[\w]+)/$', views.ajax_view_esquema, name='mod_esquema'),
 	url(r'^vercontrol/(?P<control_id>[\w]+)/$', views.ajax_view_control, name='vercontrol'),
 	url(r'^activar/(?P<uid>[\w]+)/$', views.activar_view, name='activar'),
-	url(r'^esquema_descargar/(?P<control_id>[\w]+)/$', views.esquema_view, name='esquema')
+	url(r'^esquema_descargar/(?P<control_id>[\w]+)/$', views.esquema_view, name='esquema'),
+	url(r'^pdf$', views.pdf_view, name='pdf')
 ]
