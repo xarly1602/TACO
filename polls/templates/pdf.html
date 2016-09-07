@@ -1,21 +1,88 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-	<title>HOLI</title>
-</head>
-<body>
-{% load bootstrap3 %}
-{% load staticfiles %}
-<h1>ESQUEMA</h1>
-<p>Día 1: {{esquema.0}}</p>
-<p>Día 2: {{esquema.1}}</p>
-<p>Día 3: {{esquema.2}}</p>
-<p>Día 4: {{esquema.3}}</p>
-<p>Día 5: {{esquema.4}}</p>
-<p>Día 6: {{esquema.5}}</p>
-<p>Día 7: {{esquema.6}}</p>
-<div align="center">
-	<img height="300" width="250" src="/home/xarly/Escritorio/TACO/polls/static/img/tacosmart_logo.png">
-</div>
-</body>
+	<head>
+		<style>
+			table {
+				border: 1px solid black;
+			    border-collapse: collapse;
+			}
+			td {
+				text-align: center;
+				width: 25%;
+				border: 1px solid black;
+			    border-collapse: collapse;
+			}
+			th {
+				width: 14%;
+				border: 1px solid black;
+			    border-collapse: collapse;
+			}
+			.watermark
+			{
+			 position:fixed;
+			 bottom:90%;
+			 right:50%;
+			 opacity:0.3;
+			 z-index:99;
+			 color:white;
+			 float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<img class="watermark" src="/home/xarly/Escritorio/TACO/polls/templates/tacosmart_logo.png" height="120px" width="100px">
+		<h1 align="center">Esquema de dosificación</h1>
+		<h2 align="center">Datos del paciente</h2>
+		<div align="center">
+			
+			<table style="width:100%">
+				<tr>
+					<td><br/><b>Número de ficha: </b></td>
+					<td><br/>{{paciente.paciente_nficha}}</td>
+					<td><br/><b>Rut paciente: </b></td>
+					<td><br/>{{paciente.persona.persona_rut}}</td>
+				</tr>
+				<tr>
+					<td><br/><b>Nombre: </b></td>
+					<td><br/>{{paciente.persona.persona_nombre}}</td>
+					<td><br/><b>Apellido Paterno: </b></td>
+					<td><br/>{{paciente.persona.persona_apellidopaterno}}</td>
+				</tr>
+				<tr>
+					<td><br/><b>Teléfono: </b></td>
+					<td><br/>{{paciente.persona.persona_telefono}}</td>
+					<td><br/><b>Dirección: </b></td>
+					<td><br/>{{paciente.persona.persona_direccion}}</td>
+				</tr>
+				<tr>
+					<td><br/><b>Fecha: </b></td>
+					<td><br/>{{control.control_fecha}}</td>
+					<td><br/><b>Siguiente control: </b></td>
+					<td><br/>{{control.control_fechasiguiente}}</td>
+				</tr>
+			</table>
+
+			<h2 align="center">Esquema Diario</h2>
+			<table>
+				<tr>
+					<th><br/>Día 1</th>
+					<th><br/>Día 2</th>
+					<th><br/>Día 3</th>
+					<th><br/>Día 4</th>
+					<th><br/>Día 5</th>
+					<th><br/>Día 6</th>
+					<th><br/>Día 7</th>
+				</tr>
+				<tr>
+					<td><br/>{{esquema.0}}</td>
+					<td><br/>{{esquema.1}}</td>
+					<td><br/>{{esquema.2}}</td>
+					<td><br/>{{esquema.3}}</td>
+					<td><br/>{{esquema.4}}</td>
+					<td><br/>{{esquema.5}}</td>
+					<td><br/>{{esquema.6}}</td>
+				</tr>
+			</table>
+		</div>
+	</body>
 </html>

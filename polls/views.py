@@ -539,6 +539,7 @@ def handler500(request):
 
 def esquema_view(request, control_id):
 	control = Control.objects.get(control_id=control_id)
+	paciente = control.paciente
 	esquema = Utilidades().esquemaSemanal(control.control_dosis)
 	nombre_archivo = 'Esquema' + control.paciente.persona.persona_rut
 	form = FormEsquema(initial={
@@ -553,6 +554,8 @@ def esquema_view(request, control_id):
 	context = {
 		'form': form,
 		'esquema': esquema,
+		'paciente': paciente,
+		'control': control,
 	} 
 	return render_to_pdf("pdf.html", context)
 	#response = HttpResponse(content_type='text/csv')
