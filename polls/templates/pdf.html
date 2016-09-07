@@ -3,18 +3,18 @@
 	<head>
 		<style>
 			table {
-				border: 1px solid black;
+				border: 1px solid grey;
 			    border-collapse: collapse;
 			}
 			td {
 				text-align: center;
 				width: 25%;
-				border: 1px solid black;
+				border: 1px solid grey;
 			    border-collapse: collapse;
 			}
 			th {
 				width: 14%;
-				border: 1px solid black;
+				border: 1px solid grey;
 			    border-collapse: collapse;
 			}
 			.watermark
@@ -37,50 +37,56 @@
 			
 			<table style="width:100%">
 				<tr>
-					<td><br/><b>Número de ficha: </b></td>
-					<td><br/>{{paciente.paciente_nficha}}</td>
-					<td><br/><b>Rut paciente: </b></td>
-					<td><br/>{{paciente.persona.persona_rut}}</td>
+					<td><br/><b>Número de ficha: </b><br/></td>
+					<td><br/>{{paciente.paciente_nficha}}<br/></td>
+					<td><br/><b>Rut paciente: </b><br/></td>
+					<td><br/>{{paciente.persona.persona_rut}}<br/></td>
 				</tr>
 				<tr>
-					<td><br/><b>Nombre: </b></td>
-					<td><br/>{{paciente.persona.persona_nombre}}</td>
-					<td><br/><b>Apellido Paterno: </b></td>
-					<td><br/>{{paciente.persona.persona_apellidopaterno}}</td>
+					<td><br/><b>Nombre: </b><br/></td>
+					<td><br/>{{paciente.persona.persona_nombre}}<br/></td>
+					<td><br/><b>Apellido Paterno: </b><br/></td>
+					<td><br/>{{paciente.persona.persona_apellidopaterno}}<br/></td>
 				</tr>
 				<tr>
-					<td><br/><b>Teléfono: </b></td>
-					<td><br/>{{paciente.persona.persona_telefono}}</td>
-					<td><br/><b>Dirección: </b></td>
-					<td><br/>{{paciente.persona.persona_direccion}}</td>
+					<td><br/><b>Teléfono: </b><br/></td>
+					<td><br/>{{paciente.persona.persona_telefono}}<br/></td>
+					<td><br/><b>Dirección: </b><br/></td>
+					<td><br/>{{paciente.persona.persona_direccion}}<br/></td>
 				</tr>
 				<tr>
-					<td><br/><b>Fecha: </b></td>
-					<td><br/>{{control.control_fecha}}</td>
-					<td><br/><b>Siguiente control: </b></td>
-					<td><br/>{{control.control_fechasiguiente}}</td>
+					<td><br/><b>Fecha: </b><br/></td>
+					<td><br/>{{control.control_fecha}}<br/></td>
+					<td><br/><b>Siguiente control: </b><br/></td>
+					<td><br/>{% if  control.control_fechasiguiente != none%}{{control.control_fechasiguiente}} {% endif %}<br/></td>
+				</tr>
+				<tr>
+					<td><br/><b>Diagnostico: </b><br/></td>
+					<td><br/>{{diagnostico.0.diagnostico}}<br/></td>
+					<td><br/><b>Medicamento: </b><br/></td>
+					<td><br/>{% if control.medicamento != none %}{{control.medicamento}} {% endif %}<br/></td>
 				</tr>
 			</table>
 
 			<h2 align="center">Esquema Diario</h2>
 			<table>
 				<tr>
-					<th><br/>Día 1</th>
-					<th><br/>Día 2</th>
-					<th><br/>Día 3</th>
-					<th><br/>Día 4</th>
-					<th><br/>Día 5</th>
-					<th><br/>Día 6</th>
-					<th><br/>Día 7</th>
+					<th><br/>Día 1<br/></th>
+					<th><br/>Día 2<br/></th>
+					<th><br/>Día 3<br/></th>
+					<th><br/>Día 4<br/></th>
+					<th><br/>Día 5<br/></th>
+					<th><br/>Día 6<br/></th>
+					<th><br/>Día 7<br/></th>
 				</tr>
 				<tr>
-					<td><br/>{{esquema.0}}</td>
-					<td><br/>{{esquema.1}}</td>
-					<td><br/>{{esquema.2}}</td>
-					<td><br/>{{esquema.3}}</td>
-					<td><br/>{{esquema.4}}</td>
-					<td><br/>{{esquema.5}}</td>
-					<td><br/>{{esquema.6}}</td>
+					<td><br/>{{esquema.0}}<br/></td>
+					<td><br/>{{esquema.1}}<br/></td>
+					<td><br/>{{esquema.2}}<br/></td>
+					<td><br/>{{esquema.3}}<br/></td>
+					<td><br/>{{esquema.4}}<br/></td>
+					<td><br/>{{esquema.5}}<br/></td>
+					<td><br/>{{esquema.6}}<br/></td>
 				</tr>
 			</table>
 		</div>
