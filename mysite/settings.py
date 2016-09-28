@@ -41,7 +41,7 @@ INSTALLED_APPS = [ #Migrara las tablas de las app que estan aqui (agregar las ap
 	'polls',
 	'bootstrap3',
 	'table',
-	'crispy_forms',
+	#'crispy_forms',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -60,7 +60,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': ['/home/lalito/Escritorio/TacoSmart/mysite/polls/templates'], #Por defecto es esta url
+		'DIRS': [], #Por defecto es esta url
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -80,14 +80,14 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': 'TS',
-		'USER': 'postgres',
-		'PASSWORD': '',
-		'HOST': 'localhost',
-		'PORT': '5432',
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Tacosmart',
+        'USER': 'taco_admin',
+        'PASSWORD': 'tacosmart2016',
+        'HOST': 'taco-db-instance.c0zwpgfcyhvb.us-west-2.rds.amazonaws.com',
+        'PORT': '5432',
+    } 
 }
 
 
@@ -128,7 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 # Email credentials
 
 EMAIL_HOST = 'smtp.gmail.com'
