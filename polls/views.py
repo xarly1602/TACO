@@ -178,7 +178,6 @@ def registro_usuario(request):
 			asunto = "Activar usuario: " + nombre + " " + apellidoPaterno
 			uid = user_model.id
 			link = "http://127.0.0.1:8000/polls/activar/" + Utilidades().encriptar("TACO_2016", str(uid))
-			print(link)
 			#mensaje = "Se le informa que el el usuario " + nombre + " " + apellidoPaterno + ", se ha registrado en el sistema TacoSmart.\nEn el siguiente link podrá activar la cuenta del nuevo usuario: \n\n"+link
 			send_mail(
 				asunto,
