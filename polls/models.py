@@ -113,7 +113,7 @@ class Paciente(models.Model):
 
 class PacienteDiagnostico(models.Model):
 	paciente_diagnostico_id = models.AutoField(primary_key=True)
-	persona = models.ForeignKey('Paciente', models.DO_NOTHING)
+	paciente = models.ForeignKey('Paciente', models.DO_NOTHING)
 	diagnostico = models.ForeignKey('Diagnostico', models.DO_NOTHING)
 
 	class Meta:
