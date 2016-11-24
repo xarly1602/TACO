@@ -119,9 +119,9 @@ class PacienteDiagnostico(models.Model):
 	class Meta:
 		managed = True
 		db_table = 'paciente_diagnostico'
-		unique_together = (('paciente', 'diagnostico'), ('paciente', 'diagnostico'),)
+		unique_together = (('persona', 'diagnostico'), ('persona', 'diagnostico'),)
 	def __str__(self):
-		return str(self.paciente.persona.persona_rut) + " - " + str(self.diagnostico.diagnostico_nombre)
+		return str(self.persona.persona.persona_rut) + " - " + str(self.diagnostico.diagnostico_nombre)
 
 
 class Persona(models.Model):
