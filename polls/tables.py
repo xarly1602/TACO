@@ -12,10 +12,10 @@ from table.columns.checkboxcolumn import CheckboxColumn
 
 class PersonaTable(Table):
 	#persona_id = Column(field='persona_id', header=u'Id')
-	persona_rut = Column(field='paciente.persona.persona_rut', header=u'Rut')
-	persona_nombre = Column(field='paciente.persona.persona_nombre', header=u'Nombre')
-	persona_apellidopaterno = Column(field='paciente.persona.persona_apellidopaterno', header=u'Apellido Paterno')
-	persona_apellidomaterno = Column(field='paciente.persona.persona_apellidomaterno', header=u'Apellido Materno')
+	persona_rut = Column(field='persona.persona.persona_rut', header=u'Rut')
+	persona_nombre = Column(field='persona.persona.persona_nombre', header=u'Nombre')
+	persona_apellidopaterno = Column(field='persona.persona.persona_apellidopaterno', header=u'Apellido Paterno')
+	persona_apellidomaterno = Column(field='persona.persona.persona_apellidomaterno', header=u'Apellido Materno')
 	#persona_sexo = Column(field='persona_sexo', header=u'Sexo')
 	#persona_direccion = Column(field='persona_direccion', header=u'Direccion')
 	#persona_telefonocontacto = Column(field='persona_telefonocontacto', header=u'Telefono')
@@ -29,8 +29,8 @@ class PersonaTable(Table):
 	#paciente_telefonoemergencia = Column(field='paciente_telefonoemergencia', header=u'Numero de contacto')
 	#paciente_anamnesis = Column(header=u'Anamnesis')
 	name = LinkColumn(header=u'Ver paciente', links=[
-		Link(viewname='editarpaciente', args=(A('paciente.paciente_id'),), attrs={'class': 'detalle fa fa-pencil btn'}, text=''),
-		Link(viewname='verpaciente', args=(A('paciente.paciente_id'),), attrs={'class': 'detalle fa fa-search btn'}, text='')])
+		Link(viewname='editarpaciente', args=(A('persona.paciente_id'),), attrs={'class': 'detalle fa fa-pencil btn'}, text=''),
+		Link(viewname='verpaciente', args=(A('persona.paciente_id'),), attrs={'class': 'detalle fa fa-search btn'}, text='')])
 		#Link(viewname='temp', args=(A('paciente_id'),), text=A('paciente_nombre'))])
 	class Meta:
 		model = PacienteDiagnostico
