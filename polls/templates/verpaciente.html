@@ -24,9 +24,8 @@
 		{% else %}
 			{% render_table listaControlesInc %}
 		{% endif %}	  
-		{% if profesional.profesional_tipo == 0 %}
 			<a href="{% url 'modal' 0 %}" data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
-		{% endif %}
+	
 		<button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
 	</div>
 	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

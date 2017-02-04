@@ -285,7 +285,7 @@ def ingreso_paciente(request):
 			paciente.paciente_rango = "2 - 3" # Rango terapeutico por defecto
 			paciente.save()
 			pd = PacienteDiagnostico()
-			pd.paciente = paciente
+			pd.persona = paciente
 			pd.diagnostico = diagnostico
 			pd.save()
 			messages.success(request, 'Paciente ' + nombre.lower() + ' ' + apellidoPaterno.lower() + ' ' + apellidoMaterno.lower() + ' ingresado con exito.')
@@ -539,7 +539,7 @@ def handler500(request):
 def esquema_view(request, control_id):
 	control = Control.objects.get(control_id=control_id)
 	paciente = control.paciente
-	diagnostico = PacienteDiagnostico.objects.filter(paciente=paciente)
+	diagnostico = PacienteDiagnostico.objects.filter(persona=paciente)
 	esquema = Utilidades().esquemaSemanal(control.control_dosis)
 	nombre_archivo = 'Esquema' + control.paciente.persona.persona_rut
 	form = FormEsquema(initial={
