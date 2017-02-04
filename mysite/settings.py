@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'TS',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Tacosmart',
+        'USER': 'taco_admin',
+        'PASSWORD': 'tacosmart2016',
+        'HOST': 'taco-db-instance.c0zwpgfcyhvb.us-west-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }

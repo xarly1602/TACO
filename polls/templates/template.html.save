@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="keywords" content="footer, address, phone, icons" />
+		<title>{% block title %} {% endblock %}</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		{% load staticfiles %}
+		<link rel="stylesheet" href="{% static 'css/demo.css'%}">
+		<!--link rel="stylesheet" href="{% static 'css/custom.css'%}"-->
+		<link rel="stylesheet" href="{% static 'css/footerDemo.css'%}">
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">	
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+		<link rel="shortcut icon" href="{% static 'img/acoss-logo.png'%}">
+		{% block head %} {% endblock %}
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<a class="navbar-brand page-scroll col-md-2" href="{% url 'index' %}"><img src="{% static 'img/acoss-logo-horizontal.png'%}" width="80%"align="middle"></a>
+				<ul class="nav navbar-nav navbar-left">
+					{% if user.is_authenticated %}					
+						<li><a href="{% url 'index' %}">Pacientes</a></li>
+						<li><a href="{% url 'index_c' %}">Lista de trabajo</a></li>
+					{% endif %}
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated %}					
+						<li><a href="{% url 'editarperfil' %}">Editar Perfil</a></li>
+						<li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+					{% else %}
+						<li><a class="page-scroll" href="mailto:soporte@mizc.cl">Contacto</a></li>	
+						<li><a class="page-scroll" href="{% url 'registro' %}">Registrarse</a></li>			   
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+		</nav>
+
+			{% block body %}
+			{% load bootstrap3 %}
+			{# Load CSS and JavaScript #}
+			{% bootstrap_css %}
+			{% bootstrap_javascript %}
+			{# Display django.contrib.messages as Bootstrap alerts #}		
+			{% endblock %}
+		<footer class="footer-distributed">
+			<div class="footer-left">
+			</div>
+			<div class="footer-center">
+				<div align="center">
+				<a href="http://www.mizc.cl">
+					<img width="20%" height="20%" src="{% static 'img/mizc_logo.png'%}">
+				</a>
+				<br/>
+				<br/>
+				<p class="footer-company-name">MIZC SpA &copy; 2016. Contacto: soporte@mizc.cl</p>			
+				</div>
+			</div>
+			<div class="footer-right">
+				
+			</div>
+		</footer>
+	</body>
+</html>
