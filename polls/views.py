@@ -489,6 +489,9 @@ def ajax_view_control(request, control_id):
 @login_required(login_url='login')
 def ajax_view_esquema(request, control_id):
 	control = Control.objects.get(control_id=control_id)
+	print control.control_dosis
+	if(control.control_dosis is None):
+		return HttpResponse(render_to_response("esquema.html", {'form': None, 'control': control,'ok': False}, context_instance=RequestContext(request)))
 	esquema = Utilidades().esquemaSemanal(control.control_dosis)
 	form = FormEsquema(initial={
 		'dia_1':esquema[0],
@@ -500,7 +503,7 @@ def ajax_view_esquema(request, control_id):
 		'dia_7':esquema[6],
 		})
 	if request.method == 'GET':
-		return HttpResponse(render_to_response("esquema.html", {'form': form, 'control': control}, context_instance=RequestContext(request)))
+		return HttpResponse(render_to_response("esquema.html", {'form': form, 'control': control, 'ok':True}, context_instance=RequestContext(request)))
 	else:
 		return render_to_response("esquema.html")
 
