@@ -23,8 +23,8 @@
 			{% render_table listaControles %}
 		{% else %}
 			{% render_table listaControlesInc %}
-		{% endif %}	  
-			<a href="{% url 'modal' 0 %}" data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
+		{% endif %}
+			<a href="{% url 'modal' paciente.paciente_id 0 %}" data-toggle="modal" class="btn btn-primary" data-target="#modal">Nuevo Control</a>
 	
 		<button type="submit" class="btn btn-secondary" onClick="javascript:history.go(-1);">Volver</button>
 	</div>

@@ -62,7 +62,7 @@ class IncControlTable(Table):
     #control_lugar = Column(field='control_lugar', header=u'Lugar')
     name = LinkColumn(header=u'Ingresar control', links=[
         Link(viewname='control', args=(A('paciente_id'),), attrs={'class': 'detalle fa fa-pencil btn'}, text=''),
-        Link(viewname='modal', args=(A('control_id'),), attrs={'class': 'detalle fa fa-search btn', 'data-toggle': 'modal', 'data-target': '#modal'}, text=''),
+        Link(viewname='modal', args=(A('paciente_id'),A('control_id'),), attrs={'class': 'detalle fa fa-search btn', 'data-toggle': 'modal', 'data-target': '#modal'}, text=''),
         Link(viewname='mod_esquema', args=(A('control_id'),), attrs={'class': 'detalle fa fa-calendar btn', 'data-toggle': 'modal', 'data-target': '#modal'}, text='')])
     class Meta:
         model = Control
@@ -81,6 +81,21 @@ class IndexControlTable(Table):
     #control_lugar = Column(field='control_lugar', header=u'Lugar')
     name = LinkColumn(header=u'Ingresar control', links=[
         Link(viewname='control', args=(A('paciente_id'),), attrs={'class': 'detalle fa fa-pencil btn'}, text=''),
-        Link(viewname='modal', args=(A('control_id'),), attrs={'class': 'detalle fa fa-search btn', 'data-toggle': 'modal', 'data-target': '#modal'}, text='')])    
+        Link(viewname='modal', args=(A('paciente_id'),A('control_id'),), attrs={'class': 'detalle fa fa-search btn', 'data-toggle': 'modal', 'data-target': '#modal'}, text='')])    
+    class Meta:
+        model = Control        
+
+class IndexControlTableNoMedico(Table):
+    #paciente = Column()
+    #persona = Column()
+    persona_rut = Column(field='paciente.persona.persona_rut', header=u'Rut')
+    persona_nombre =Column(field='paciente.persona.persona_nombre', header=u'Nombre')
+    persona_apellidopaterno = Column(field='paciente.persona.persona_apellidopaterno', header=u'Apellido')
+    control_fecha = Column(field='control_fecha', header=u'Fecha Control')
+    #medicamento = Column(field='medicamento.medicamento_nombre', header=u'Medicamento')
+    control_inr = Column(field='control_inr', header=u'INR')
+    control_dosis = Column(field='control_dosis', header=u'Dosis')
+    #control_fechasiguiente = Column() 
+    #control_lugar = Column(field='control_lugar', header=u'Lugar')
     class Meta:
         model = Control        

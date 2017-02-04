@@ -18,7 +18,11 @@
 		<div class="page-header">
 			<h2>Lista de Trabajo</h2>
 		</div>
+		{% if tipo == 1 %}
 		{% render_table listarPersonas %}
+		{% else %}
+		{% render_table listarPersonasNM %}
+		{% endif %}
 		<a href="{% url 'ingreso' %}" class="btn btn-primary" type="submit">Ingresar Paciente</a>
 	</div>
 	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

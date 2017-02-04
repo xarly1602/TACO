@@ -26,8 +26,13 @@ def index_view_pacientes(request):
 
 @login_required(login_url='login')
 def index_view_controles(request):
+	print request.user
+	persona = Persona.objects.filter(persona_rut=request.user)
+	profesional = Profesional.objects.filter(persona=persona)
+	print profesional[0].profesional_tipo
 	listaControles = IndexControlTable(Control.objects.filter(control_estado = False))
-	return render(request, "index_c.html", {'listarPersonas': listaControles})
+	listaControlesNM = IndexControlTableNoMedico(Control.objects.filter(control_estado = False))
+	return render(request, "index_c.html", {'listarPersonas': listaControles, 'listarPersonasNM': listaControlesNM, 'tipo': profesional[0].profesional_tipo})
 
 def login_view(request):
 	# Si el usuario esta ya logueado, lo redireccionamos a index_view
@@ -55,7 +60,6 @@ def verpaciente_view(request, paciente_id):
 	controles = Control.objects.filter(paciente=paciente).filter(control_estado = True)
 	listaControles = ControlTable(Control.objects.filter(paciente=paciente))
 	listaControlesInc = IncControlTable(Control.objects.filter(paciente=paciente))
-	paciente = Paciente.objects.get(paciente_id = paciente_id)
 	rango = paciente.paciente_rango.replace(" ", "").split("-")
 	r_min = float(rango[0])
 	r_max = float(rango[1])
@@ -65,8 +69,9 @@ def verpaciente_view(request, paciente_id):
 	usuario = request.user
 	persona = Persona.objects.get(user = usuario)
 	profesional = Profesional.objects.get(persona = persona)
+	predictor = Predictor(1)
 	if request.method == 'POST':
-		if profesional.profesional_tipo == 0:
+		if True:
 			form = FormIniciarControl(request.POST, request.FILES)
 			# Comprobamos si el formulario es valido
 			if form.is_valid():
@@ -87,6 +92,17 @@ def verpaciente_view(request, paciente_id):
 				control.paciente = Paciente.objects.get(paciente_id=paciente_id)
 				control.control_fecha = fecha
 				control.control_inr = inr
+				controles = Control.objects.filter(paciente=paciente_id)
+				if len(controles) >= 3:
+					dosis_h = list()
+					inr_h = list()
+					dosis_h.append(0)
+					dosis = float(dosis)
+					for control in controles:
+						dosis_h.append(control.control_dosis)
+						inr_h.append(control.control_inr)
+					dosis_h.pop()
+					control.control_inr_p =	predictor.predecir_inr(dosis_h, inr_h, dosis)
 				if dias not in [-1,0,1]:
 					fechasiguiente = fecha + datetime.timedelta(days=dias)
 					control.control_fechasiguiente = fechasiguiente
@@ -437,13 +453,15 @@ def ajax_view_inr(request):
 			return HttpResponse(inr_p)
 
 @login_required(login_url='login')
-def ajax_view_modal(request, control_id):
+def ajax_view_modal(request, paciente_id, control_id):
 	usuario = request.user
 	persona = Persona.objects.get(user = usuario)
 	profesional = Profesional.objects.get(persona = persona)
+	paciente = Paciente.objects.get(paciente_id = paciente_id)
 	tipo = profesional.profesional_tipo
 	if request.method == 'GET':
-		if tipo == 1:
+		print (control_id)
+		if tipo == 1 and control_id != '0':
 			control = Control.objects.get(control_id=control_id)
 			paciente = control.paciente
 			form = FormNuevoControl(initial={
@@ -454,9 +472,9 @@ def ajax_view_modal(request, control_id):
 				'siguiente_control': control.control_fechasiguiente,
 				'control_id': control.control_id})
 			return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form, 'control': control, 'paciente': paciente}, context_instance=RequestContext(request)))
-		elif tipo == 0:
+		else:
 			form = FormIniciarControl(initial={'fecha': date.today(), 'inr': 0})
-			return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form}, context_instance=RequestContext(request)))
+			return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form, 'paciente': paciente}, context_instance=RequestContext(request)))
 	return render_to_response("ingresarcontrol.html")
 
 @login_required(login_url='login')
@@ -539,7 +557,7 @@ def handler500(request):
 def esquema_view(request, control_id):
 	control = Control.objects.get(control_id=control_id)
 	paciente = control.paciente
-	diagnostico = PacienteDiagnostico.objects.filter(persona=paciente)
+	diagnostico = PacienteDiagnostico.objects.filter(paciente=paciente)
 	esquema = Utilidades().esquemaSemanal(control.control_dosis)
 	nombre_archivo = 'Esquema' + control.paciente.persona.persona_rut
 	form = FormEsquema(initial={
