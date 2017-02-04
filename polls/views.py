@@ -92,6 +92,10 @@ def verpaciente_view(request, paciente_id):
 				control.paciente = Paciente.objects.get(paciente_id=paciente_id)
 				control.control_fecha = fecha
 				control.control_inr = inr
+				if dosis is None:
+					control.control_dosis = 0
+				else:
+					control.control_dosis = dosis
 				controles = Control.objects.filter(paciente=paciente_id)
 				if len(controles) >= 3:
 					dosis_h = list()
@@ -106,7 +110,6 @@ def verpaciente_view(request, paciente_id):
 				if dias not in [-1,0,1]:
 					fechasiguiente = fecha + datetime.timedelta(days=dias)
 					control.control_fechasiguiente = fechasiguiente
-				control.control_dosis = dosis
 				control.save()
 				print("control")
 				messages.success(request, 'Control ingresado con éxito')
@@ -489,8 +492,7 @@ def ajax_view_control(request, control_id):
 @login_required(login_url='login')
 def ajax_view_esquema(request, control_id):
 	control = Control.objects.get(control_id=control_id)
-	print control.control_dosis
-	if(control.control_dosis is None):
+	if(control.control_dosis is None or control.control_dosis == 0):
 		return HttpResponse(render_to_response("esquema.html", {'form': None, 'control': control,'ok': False}, context_instance=RequestContext(request)))
 	esquema = Utilidades().esquemaSemanal(control.control_dosis)
 	form = FormEsquema(initial={
