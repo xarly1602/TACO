@@ -32,6 +32,32 @@ def index_view_controles(request):
 	print profesional[0].profesional_tipo
 	listaControles = IndexControlTable(Control.objects.filter(control_estado = False))
 	listaControlesNM = IndexControlTableNoMedico(Control.objects.filter(control_estado = False))
+	if request.method == 'POST':
+		print 'holaaaaaa!!!!!!'
+		form = FormNuevoControl(request.POST, request.FILES)
+		print form.is_valid()
+		print form.cleaned_data
+		# Comprobamos si el formulario es valido
+		cleaned_data = form.cleaned_data
+		medicamento = cleaned_data.get('medicamento')
+		fecha = cleaned_data.get('fecha')
+		inr = cleaned_data.get('inr')
+		dosis = cleaned_data.get('dosis')
+		fechasiguiente = cleaned_data.get('siguiente_control')
+		lugar = cleaned_data.get('lugar')
+		evolucion = cleaned_data.get('evolucion')
+		cid = cleaned_data.get('control_id')
+		control = Control.objects.get(control_id=cid)
+		control.medicamento = medicamento
+		control.control_fecha = fecha
+		control.control_inr = inr
+		control.control_dosis = dosis
+		control.control_fechasiguiente = fechasiguiente
+		control.control_lugar = lugar
+		control.control_evolucion = evolucion
+		control.control_estado = True
+		control.save()
+		messages.success(request, 'Control guardado con éxito')
 	return render(request, "index_c.html", {'listarPersonas': listaControles, 'listarPersonasNM': listaControlesNM, 'tipo': profesional[0].profesional_tipo})
 
 def login_view(request):
@@ -478,6 +504,29 @@ def ajax_view_modal(request, paciente_id, control_id):
 		else:
 			form = FormIniciarControl(initial={'fecha': date.today(), 'inr': 0})
 			return HttpResponse(render_to_response("ingresarcontrol.html", {'form': form, 'paciente': paciente}, context_instance=RequestContext(request)))
+	else:
+		form = FormNuevoControl(request.POST, request.FILES)
+		# Comprobamos si el formulario es valido
+		if form.is_valid():
+			cleaned_data = form.cleaned_data
+			medicamento = cleaned_data.get('medicamento')
+			fecha = cleaned_data.get('fecha')
+			inr = cleaned_data.get('inr')
+			dosis = cleaned_data.get('dosis')
+			fechasiguiente = cleaned_data.get('siguiente_control')
+			lugar = cleaned_data.get('lugar')
+			evolucion = cleaned_data.get('evolucion')
+			control = Control()
+			control.paciente = Paciente.objects.get(paciente_id=paciente_id)
+			control.medicamento = medicamento
+			control.control_fecha = fecha
+			control.control_inr = inr
+			control.control_dosis = dosis
+			control.control_fechasiguiente = fechasiguiente
+			control.control_lugar = lugar
+			control.control_evolucion = evolucion
+			control.save()
+			messages.success(request, 'Control guardado con éxito')
 	return render_to_response("ingresarcontrol.html")
 
 @login_required(login_url='login')
